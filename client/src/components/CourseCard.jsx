@@ -31,7 +31,7 @@ export default function CourseCard({ course }) {
         )}
       </div>
 
-      <div className="flex h-full flex-col gap-3 p-5">
+      <div className="flex flex-col gap-3 p-5">
         <div className="flex flex-wrap items-center gap-2">
           {course.level && (
             <span className="badge bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
