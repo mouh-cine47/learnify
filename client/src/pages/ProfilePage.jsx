@@ -208,7 +208,7 @@ export default function ProfilePage() {
             )}
 
             {/* Info Grid */}
-            <div className="grid grid-cols-1 gap-8 mb-8 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-8 mb-8 mt-8 md:grid-cols-2">
               <div>
                 <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">Personal Information</h2>
                 <div className="space-y-4">
