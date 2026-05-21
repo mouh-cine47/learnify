@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { User, Mail, MapPin, Award, Settings, BookOpen } from 'lucide-react';
+import { User, Mail, MapPin, Award, Settings, BookOpen, Eye, EyeOff} from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { safeJson } from '../utils/safeJson';
 import { getApiBaseUrl } from '../utils/apiBase';
@@ -14,7 +14,18 @@ export default function ProfilePage() {
   const [error, setError] = useState('');
   const [editing, setEditing] = useState(false);
   const [form, setForm] = useState({ firstName: '', lastName: '', bio: '' });
+  const [changingPwd, setChangingPwd] = useState(false);
+  const [pwdForm, setPwdForm] = useState({ currentPassword: '', newPassword: '', confirmPassword: '' });
+  const [pwdError, setPwdError] = useState('');
+  const [pwdSuccess, setPwdSuccess] = useState('');
+  const [savingPwd, setSavingPwd] = useState(false);
   const [saving, setSaving] = useState(false);
+  
+  const [showPwd, setShowPwd] = useState({
+  currentPassword: false,
+  newPassword: false,
+  confirmPassword: false,
+});
 
   const token = localStorage.getItem('token');
 
@@ -32,6 +43,37 @@ export default function ProfilePage() {
       .catch(() => setError('Failed to load profile'))
       .finally(() => setLoading(false));
   }, [token]);
+
+  const handleChangePassword = async () => {
+  setPwdError('');
+  setPwdSuccess('');
+  if (pwdForm.newPassword !== pwdForm.confirmPassword) {
+    return setPwdError("Les mots de passe ne correspondent pas");
+  }
+  if (pwdForm.newPassword.length < 6) {
+    return setPwdError("Minimum 6 caractères");
+  }
+  setSavingPwd(true);
+  try {
+    const res = await fetch(`${API_BASE}/users/change-password`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      body: JSON.stringify({
+        currentPassword: pwdForm.currentPassword,
+        newPassword: pwdForm.newPassword,
+      }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message);
+    setPwdSuccess(data.message);
+    setPwdForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
+    setChangingPwd(false);
+  } catch (e) {
+    setPwdError(e.message);
+  } finally {
+    setSavingPwd(false);
+  }
+};
 
   const handleSave = async () => {
     setSaving(true);
@@ -126,6 +168,44 @@ export default function ProfilePage() {
                 </div>
               </div>
             ) : null}
+
+            {/* Change Password */}
+            {!changingPwd ? (
+             <button onClick={() => setChangingPwd(true)} className="flex items-center gap-2 px-6 py-3 ml-3 font-bold text-white transition rounded-lg bg-slate-700 hover:bg-slate-800">
+               Change Password
+             </button>
+            ) : (
+               <div className="p-6 mt-6 space-y-4 border border-gray-200 rounded-lg dark:border-gray-700">
+                  <h3 className="font-bold text-gray-900 dark:text-white">Change Password</h3>
+                 {pwdError && <p className="text-sm text-red-500">{pwdError}</p>}
+                 {pwdSuccess && <p className="text-sm text-green-500">{pwdSuccess}</p>}
+                 {['currentPassword', 'newPassword', 'confirmPassword'].map((field) => (
+                  <div key={field}>
+                   <label className="block mb-1 text-sm font-semibold text-gray-700 dark:text-gray-300">
+                      {field === 'currentPassword' ? 'Current Password'
+                       : field === 'newPassword' ? 'New Password'
+                       : 'Confirm New Password'}
+                   </label>
+                   <div className="relative">
+                     <input type={showPwd[field] ? 'text' : 'password'} value={pwdForm[field]} onChange={e => setPwdForm(f => ({ ...f, [field]: e.target.value }))} className="w-full px-3 py-2 pr-10 text-gray-900 bg-white border border-gray-300 rounded-lg dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                     <button type="button" onClick={() => setShowPwd(s => ({ ...s, [field]: !s[field] }))} className="absolute text-gray-400 -translate-y-1/2 right-3 top-1/2 hover:text-gray-600 dark:hover:text-gray-300" >
+                       {showPwd[field] ? <EyeOff size={16} /> : <Eye size={16} />}
+                     </button>
+                   </div>
+                 </div>
+                   ))}
+                 <div className="flex gap-3">
+                   <button onClick={handleChangePassword} disabled={savingPwd}
+                       className="px-6 py-2 font-bold text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50">
+                      {savingPwd ? 'Saving...' : 'Save'}
+                   </button>
+                   <button onClick={() => { setChangingPwd(false); setPwdError(''); }}
+                     className="px-6 py-2 font-bold border-2 border-gray-300 rounded-lg dark:border-gray-600 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700">
+                      Cancel
+                   </button>
+                  </div>
+               </div>
+            )}
 
             {/* Info Grid */}
             <div className="grid grid-cols-1 gap-8 mb-8 md:grid-cols-2">
