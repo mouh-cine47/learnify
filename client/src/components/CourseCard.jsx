@@ -13,13 +13,13 @@ export default function CourseCard({ course }) {
     <motion.article
       whileHover={{ y: -4 }}
       transition={{ duration: 0.2 }}
-      className="surface group overflow-hidden rounded-3xl"
+      className="overflow-hidden surface group rounded-3xl"
     >
-      <div className="relative h-44 overflow-hidden">
+      <div className="relative overflow-hidden h-44">
         {course.image ? (
-          <img src={course.image} alt={course.title} className="h-full w-full object-cover" />
+          <img src={course.image} alt={course.title} className="object-cover w-full h-full" />
         ) : (
-          <div className="flex h-full items-center justify-center bg-gradient-to-br from-sky-500 via-indigo-500 to-purple-500">
+          <div className="flex items-center justify-center h-full bg-gradient-to-br from-sky-500 via-indigo-500 to-purple-500">
             <BookOpen size={48} className="text-white/80" />
           </div>
         )}
@@ -31,7 +31,7 @@ export default function CourseCard({ course }) {
         )}
       </div>
 
-      <div className="flex h-full flex-col gap-3 p-5">
+      <div className="flex flex-col gap-3 p-5">
         <div className="flex flex-wrap items-center gap-2">
           {course.level && (
             <span className="badge bg-sky-100 text-sky-700 dark:bg-slate-800 dark:text-slate-300">
@@ -70,7 +70,7 @@ export default function CourseCard({ course }) {
 
         <Link
           to={`/course/${courseId}`}
-          className="btn btn-primary btn-md w-full justify-center"
+          className="justify-center w-full btn btn-primary btn-md"
         >
           View course <ArrowUpRight size={16} />
         </Link>

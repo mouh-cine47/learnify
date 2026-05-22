@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
-import { BookOpen, Mail, MapPin, Settings, User } from 'lucide-react';
+import { User, Mail, MapPin, Award, Settings, BookOpen, Eye, EyeOff} from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
-import AnimatedPage from '../components/motion/AnimatedPage';
-import DashboardLayout from '../components/layout/DashboardLayout';
-import Button from '../components/common/Button';
-import Input from '../components/common/Input';
+import { safeJson } from '../utils/safeJson';
+import { getApiBaseUrl } from '../utils/apiBase';
 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+const API_BASE = getApiBaseUrl();
 
 export default function ProfilePage() {
   const { user: authUser } = useAuth();
@@ -16,15 +14,26 @@ export default function ProfilePage() {
   const [error, setError] = useState('');
   const [editing, setEditing] = useState(false);
   const [form, setForm] = useState({ firstName: '', lastName: '', bio: '' });
+  const [changingPwd, setChangingPwd] = useState(false);
+  const [pwdForm, setPwdForm] = useState({ currentPassword: '', newPassword: '', confirmPassword: '' });
+  const [pwdError, setPwdError] = useState('');
+  const [pwdSuccess, setPwdSuccess] = useState('');
+  const [savingPwd, setSavingPwd] = useState(false);
   const [saving, setSaving] = useState(false);
+  
+  const [showPwd, setShowPwd] = useState({
+  currentPassword: false,
+  newPassword: false,
+  confirmPassword: false,
+});
 
   const token = localStorage.getItem('token');
 
   useEffect(() => {
     if (!token) return;
     Promise.all([
-      fetch(`${API_BASE}/users/me`, { headers: { Authorization: `Bearer ${token}` } }).then(r => r.json()),
-      fetch(`${API_BASE}/users/me/courses`, { headers: { Authorization: `Bearer ${token}` } }).then(r => r.json()),
+      fetch(`${API_BASE}/users/me`, { headers: { Authorization: `Bearer ${token}` } }).then(r => safeJson(r)),
+      fetch(`${API_BASE}/users/me/courses`, { headers: { Authorization: `Bearer ${token}` } }).then(r => safeJson(r)),
     ])
       .then(([userData, coursesData]) => {
         setProfile(userData);
@@ -35,6 +44,37 @@ export default function ProfilePage() {
       .finally(() => setLoading(false));
   }, [token]);
 
+  const handleChangePassword = async () => {
+  setPwdError('');
+  setPwdSuccess('');
+  if (pwdForm.newPassword !== pwdForm.confirmPassword) {
+    return setPwdError("Les mots de passe ne correspondent pas");
+  }
+  if (pwdForm.newPassword.length < 6) {
+    return setPwdError("Minimum 6 caractères");
+  }
+  setSavingPwd(true);
+  try {
+    const res = await fetch(`${API_BASE}/users/change-password`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      body: JSON.stringify({
+        currentPassword: pwdForm.currentPassword,
+        newPassword: pwdForm.newPassword,
+      }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message);
+    setPwdSuccess(data.message);
+    setPwdForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
+    setChangingPwd(false);
+  } catch (e) {
+    setPwdError(e.message);
+  } finally {
+    setSavingPwd(false);
+  }
+};
+
   const handleSave = async () => {
     setSaving(true);
     try {
@@ -44,7 +84,7 @@ export default function ProfilePage() {
         body: JSON.stringify(form),
       });
       if (!res.ok) throw new Error('Failed to update');
-      const updated = await res.json();
+      const updated = await safeJson(res);
       setProfile(updated);
       setEditing(false);
     } catch {
@@ -61,26 +101,19 @@ export default function ProfilePage() {
   );
 
   if (error) return (
-    <AnimatedPage className="min-h-screen">
-      <div className="flex min-h-screen items-center justify-center text-rose-500">{error}</div>
-    </AnimatedPage>
+    <div className="flex items-center justify-center min-h-screen">
+      <p className="text-red-500">{error}</p>
+    </div>
   );
 
   const fullName = profile ? `${profile.firstName || ''} ${profile.lastName || ''}`.trim() : '';
 
   return (
-    <AnimatedPage className="min-h-screen">
-      <DashboardLayout
-        title="Profile settings"
-        subtitle="Update your personal details and manage your learning profile."
-        actions={!editing ? (
-          <Button onClick={() => setEditing(true)} size="sm">
-            <Settings size={16} /> Edit profile
-          </Button>
-        ) : null}
-      >
-        <div className="surface overflow-hidden rounded-3xl">
-          <div className="h-28 bg-gradient-to-r from-sky-500 via-indigo-500 to-purple-500" />
+    <div className="min-h-screen py-12 bg-gray-50 dark:bg-gray-900">
+      <div className="max-w-4xl px-4 mx-auto sm:px-6 lg:px-8">
+        <div className="overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
+          {/* Profile Header */}
+          <div className="h-32 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-900 dark:to-purple-900" />
 
           <div className="px-8 pb-8">
               <div className="-mt-12 flex flex-col items-start gap-6 md:flex-row md:items-end">
@@ -93,6 +126,7 @@ export default function ProfilePage() {
               </div>
             </div>
 
+            {/* Edit Form */}
             {editing ? (
               <div className="mt-8 rounded-2xl border border-sky-300/60 bg-sky-100/70 p-6 dark:border-slate-700/60 dark:bg-slate-900/70">
                 <div className="grid gap-4 sm:grid-cols-2">
@@ -107,29 +141,67 @@ export default function ProfilePage() {
                     onChange={e => setForm(f => ({ ...f, lastName: e.target.value }))}
                   />
                 </div>
-                <div className="mt-4">
-                  <Input
-                    label="Bio"
-                    as="textarea"
-                    rows={3}
-                    maxLength={250}
+                <div>
+                  <label className="block mb-1 text-sm font-semibold text-gray-700 dark:text-gray-300">Bio</label>
+                  <textarea
                     value={form.bio}
                     onChange={e => setForm(f => ({ ...f, bio: e.target.value }))}
-                    className="resize-none"
+                    rows={3}
+                    maxLength={250}
+                    className="w-full px-3 py-2 text-gray-900 bg-white border border-gray-300 rounded-lg dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
-                <div className="mt-6 flex gap-3">
-                  <Button onClick={handleSave} disabled={saving} size="md">
+                <div className="flex gap-3">
+                  <button onClick={handleSave} disabled={saving} className="px-6 py-2 font-bold text-white transition bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50">
                     {saving ? 'Saving...' : 'Save'}
-                  </Button>
-                  <Button onClick={() => setEditing(false)} variant="secondary" size="md">
+                  </button>
+                  <button onClick={() => setEditing(false)} className="px-6 py-2 font-bold text-gray-900 transition border-2 border-gray-300 rounded-lg dark:border-gray-600 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700">
                     Cancel
-                  </Button>
+                  </button>
                 </div>
               </div>
             ) : null}
 
-            <div className="mt-8 grid gap-8 md:grid-cols-2">
+            {/* Change Password */}
+            {!changingPwd ? (
+             <button onClick={() => setChangingPwd(true)} className="flex items-center gap-2 px-6 py-3 ml-3 font-bold text-white transition rounded-lg bg-slate-700 hover:bg-slate-800">
+               Change Password
+             </button>
+            ) : (
+               <div className="p-6 mt-6 space-y-4 border border-gray-200 rounded-lg dark:border-gray-700">
+                  <h3 className="font-bold text-gray-900 dark:text-white">Change Password</h3>
+                 {pwdError && <p className="text-sm text-red-500">{pwdError}</p>}
+                 {pwdSuccess && <p className="text-sm text-green-500">{pwdSuccess}</p>}
+                 {['currentPassword', 'newPassword', 'confirmPassword'].map((field) => (
+                  <div key={field}>
+                   <label className="block mb-1 text-sm font-semibold text-gray-700 dark:text-gray-300">
+                      {field === 'currentPassword' ? 'Current Password'
+                       : field === 'newPassword' ? 'New Password'
+                       : 'Confirm New Password'}
+                   </label>
+                   <div className="relative">
+                     <input type={showPwd[field] ? 'text' : 'password'} value={pwdForm[field]} onChange={e => setPwdForm(f => ({ ...f, [field]: e.target.value }))} className="w-full px-3 py-2 pr-10 text-gray-900 bg-white border border-gray-300 rounded-lg dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                     <button type="button" onClick={() => setShowPwd(s => ({ ...s, [field]: !s[field] }))} className="absolute text-gray-400 -translate-y-1/2 right-3 top-1/2 hover:text-gray-600 dark:hover:text-gray-300" >
+                       {showPwd[field] ? <EyeOff size={16} /> : <Eye size={16} />}
+                     </button>
+                   </div>
+                 </div>
+                   ))}
+                 <div className="flex gap-3">
+                   <button onClick={handleChangePassword} disabled={savingPwd}
+                       className="px-6 py-2 font-bold text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50">
+                      {savingPwd ? 'Saving...' : 'Save'}
+                   </button>
+                   <button onClick={() => { setChangingPwd(false); setPwdError(''); }}
+                     className="px-6 py-2 font-bold border-2 border-gray-300 rounded-lg dark:border-gray-600 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700">
+                      Cancel
+                   </button>
+                  </div>
+               </div>
+            )}
+
+            {/* Info Grid */}
+            <div className="grid grid-cols-1 gap-8 mb-8 mt-8 md:grid-cols-2">
               <div>
                 <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Personal information</h2>
                 <div className="mt-4 space-y-4">
@@ -182,10 +254,11 @@ export default function ProfilePage() {
               </div>
             </div>
 
+            {/* Enrolled Courses */}
             {enrolledCourses.length > 0 && (
-              <div className="mt-8">
-                <h2 className="text-lg font-semibold text-slate-900 dark:text-white">My courses</h2>
-                <div className="mt-4 grid gap-4 sm:grid-cols-2">
+              <div className="mb-8">
+                <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">My Courses</h2>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   {enrolledCourses.map(course => (
                     <div key={course._id} className="rounded-2xl border border-sky-300/60 bg-sky-100/70 p-4 dark:border-slate-700/60 dark:bg-slate-900/70">
                       <h3 className="font-semibold text-slate-900 dark:text-white">{course.title}</h3>
@@ -195,9 +268,20 @@ export default function ProfilePage() {
                 </div>
               </div>
             )}
+
+            {/* Edit Button */}
+            {!editing && (
+              <button
+                onClick={() => setEditing(true)}
+                className="flex items-center gap-2 px-6 py-3 font-bold text-white transition bg-blue-600 rounded-lg hover:bg-blue-700"
+              >
+                <Settings size={18} />
+                Edit Profile
+              </button>
+            )}
           </div>
         </div>
-      </DashboardLayout>
-    </AnimatedPage>
+      </div>
+    </div>
   );
 }
