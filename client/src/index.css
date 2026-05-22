@@ -4,11 +4,14 @@
 :root {
   --font-sans: "Sora", "Segoe UI", sans-serif;
   --font-display: "Space Grotesk", "Sora", sans-serif;
-  --bg: 245 247 252;
+  --bg: 232 247 255;
   --fg: 15 23 42;
-  --surface: 255 255 255;
-  --surface-2: 248 250 252;
-  --border: 226 232 240;
+  --surface: 223 244 255;
+  --surface-2: 214 239 255;
+  --border: 176 214 242;
+  --muted: 71 85 105;
+  --muted-2: 100 116 139;
+  --muted-strong: 51 65 85;
   --brand-1: 56 189 248;
   --brand-2: 99 102 241;
   --brand-3: 244 114 182;
@@ -25,6 +28,9 @@
   --surface: 15 23 42;
   --surface-2: 15 23 42;
   --border: 51 65 85;
+  --muted: 148 163 184;
+  --muted-2: 203 213 225;
+  --muted-strong: 226 232 240;
   --brand-1: 125 211 252;
   --brand-2: 129 140 248;
   --brand-3: 244 114 182;
@@ -67,10 +73,17 @@ body {
       radial-gradient(700px 300px at 50% 100%, rgba(20, 184, 166, 0.12), transparent 60%);
   }
 
+  .dark .page-bg {
+    background-image:
+      radial-gradient(1000px 420px at 8% -10%, rgba(56, 189, 248, 0.08), transparent 60%),
+      radial-gradient(900px 380px at 92% 8%, rgba(99, 102, 241, 0.1), transparent 55%),
+      radial-gradient(700px 320px at 50% 100%, rgba(20, 184, 166, 0.08), transparent 60%);
+  }
+
   .surface {
-    background-color: rgba(255, 255, 255, 0.74);
-    border: 1px solid rgba(226, 232, 240, 0.7);
-    box-shadow: 0 24px 60px -40px rgba(15, 23, 42, 0.35);
+    background-color: rgba(var(--surface), 0.9);
+    border: 1px solid rgba(var(--border), 0.8);
+    box-shadow: 0 24px 60px -40px rgba(15, 23, 42, 0.3);
     backdrop-filter: blur(14px);
   }
 
@@ -81,9 +94,9 @@ body {
   }
 
   .surface-strong {
-    background-color: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(226, 232, 240, 0.8);
-    box-shadow: 0 28px 70px -50px rgba(15, 23, 42, 0.45);
+    background-color: rgba(var(--surface), 0.95);
+    border: 1px solid rgba(var(--border), 0.9);
+    box-shadow: 0 28px 70px -50px rgba(15, 23, 42, 0.4);
   }
 
   .dark .surface-strong {
@@ -92,9 +105,9 @@ body {
   }
 
   .glass {
-    background-color: rgba(255, 255, 255, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    box-shadow: 0 20px 50px -40px rgba(15, 23, 42, 0.35);
+    background-color: rgba(var(--surface), 0.75);
+    border: 1px solid rgba(var(--surface), 0.6);
+    box-shadow: 0 20px 50px -40px rgba(15, 23, 42, 0.32);
     backdrop-filter: blur(18px);
   }
 
@@ -129,8 +142,8 @@ body {
 
   .btn-secondary {
     color: rgb(var(--fg));
-    background-color: rgba(148, 163, 184, 0.12);
-    border: 1px solid rgba(148, 163, 184, 0.25);
+    background-color: rgba(var(--brand-1), 0.12);
+    border: 1px solid rgba(var(--brand-1), 0.25);
   }
 
   .dark .btn-secondary {
@@ -148,7 +161,7 @@ body {
   .btn-outline {
     color: rgb(var(--fg));
     background-color: transparent;
-    border: 1px solid rgba(148, 163, 184, 0.4);
+    border: 1px solid rgba(var(--border), 0.6);
   }
 
   .btn-danger {
@@ -174,8 +187,8 @@ body {
   .input {
     width: 100%;
     border-radius: 1.1rem;
-    border: 1px solid rgba(148, 163, 184, 0.35);
-    background-color: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(var(--border), 0.55);
+    background-color: rgba(var(--surface), 0.82);
     padding: 0.75rem 1rem;
     color: rgb(var(--fg));
     outline: none;
@@ -211,13 +224,33 @@ body {
 
   .skeleton {
     border-radius: 1rem;
-    background: linear-gradient(90deg, rgba(148, 163, 184, 0.2), rgba(148, 163, 184, 0.35), rgba(148, 163, 184, 0.2));
+    background: linear-gradient(90deg, rgba(186, 209, 235, 0.2), rgba(186, 209, 235, 0.35), rgba(186, 209, 235, 0.2));
     background-size: 200% 100%;
     animation: shimmer 1.6s ease infinite;
+  }
+
+  /* Ensure headings inside surfaces/glass use the theme foreground color
+     (prevents accidental white-on-white titles when a component contains 'text-white') */
+  .surface h1, .surface h2, .surface h3, .surface h4, .surface h5, .surface h6,
+  .surface .heading, .glass h1, .glass h2, .glass h3, .glass h4, .glass h5, .glass h6,
+  .glass .heading {
+    color: rgb(var(--fg)) !important;
   }
 }
 
 @layer utilities {
+  .text-ink {
+    color: rgb(var(--fg));
+  }
+
+  .text-muted {
+    color: rgb(var(--muted));
+  }
+
+  .text-subtle {
+    color: rgb(var(--muted-2));
+  }
+
   .text-gradient {
     background: linear-gradient(135deg, rgb(var(--brand-1)), rgb(var(--brand-2)), rgb(var(--brand-3)));
     -webkit-background-clip: text;
@@ -226,8 +259,8 @@ body {
   }
 
   .bg-grid {
-    background-image: linear-gradient(rgba(148, 163, 184, 0.12) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(148, 163, 184, 0.12) 1px, transparent 1px);
+    background-image: linear-gradient(rgba(186, 209, 235, 0.12) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(186, 209, 235, 0.12) 1px, transparent 1px);
     background-size: 26px 26px;
   }
 

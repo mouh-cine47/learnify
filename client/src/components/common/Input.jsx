@@ -18,11 +18,12 @@ function Input({
       {label && <span>{label}</span>}
       <div className="relative mt-2">
         {Icon && (
-          <span className="absolute -translate-y-1/2 pointer-events-none left-4 top-1/2 text-slate-400">
+          <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-300">
             <Icon size={18} />
           </span>
         )}
         <Component
+          className={`input text-slate-900 placeholder:text-slate-400 dark:text-white dark:placeholder:text-slate-400 ${Icon ? 'pl-11' : ''} ${className}`}
           {...props}
           type={isPassword ? (show ? 'text' : 'password') : props.type}
           className={`input ${Icon ? 'pl-11' : ''} ${isPassword ? 'pr-11' : ''} ${className}`}

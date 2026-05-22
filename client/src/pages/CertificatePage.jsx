@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Download, Loader2, Trophy, Award } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 import AnimatedPage from '../components/motion/AnimatedPage';
 import SectionHeader from '../components/ui/SectionHeader';
 import EmptyState from '../components/ui/EmptyState';
@@ -182,7 +183,7 @@ function CertCard({ cert, studentName }) {
   return (
     <div className="surface overflow-hidden rounded-3xl transition hover:-translate-y-1">
       {/* Canvas preview */}
-      <div className="bg-slate-100 p-3 dark:bg-slate-950">
+      <div className="bg-sky-50/90 p-3 dark:bg-slate-950">
         <canvas
           ref={canvasRef}
           width={700}
@@ -214,6 +215,7 @@ function CertCard({ cert, studentName }) {
 // Main Page
 export default function CertificatePage() {
   const { user } = useAuth();
+  const { isDark } = useTheme();
   const [certificates, setCertificates] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -264,7 +266,13 @@ export default function CertificatePage() {
           title="Certificates"
           subtitle={`${certificates.length} certificate${certificates.length !== 1 ? 's' : ''} earned`}
           action={
-            <div className="flex items-center gap-2 rounded-2xl bg-amber-100 px-3 py-2 text-xs font-semibold text-amber-700 dark:bg-amber-500/15 dark:text-amber-200">
+            <div
+              className={`flex items-center gap-2 rounded-2xl px-3 py-2 text-xs font-semibold shadow-sm ${
+                isDark
+                  ? 'bg-amber-500/15 text-amber-200'
+                  : 'bg-black text-white'
+              }`}
+            >
               <Award size={14} /> Verified achievements
             </div>
           }

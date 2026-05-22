@@ -236,7 +236,7 @@ export default function QuizPage() {
             <h1 className="text-xl font-semibold text-slate-900 dark:text-white">{quiz.title}</h1>
             <div className="flex items-center gap-2">
               {timeLeft !== null && (
-                <span className="flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+                <span className="flex items-center gap-1.5 rounded-full bg-sky-50 px-3 py-1 text-xs font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-300">
                   <Clock size={14} /> {minutes}:{seconds}
                 </span>
               )}
@@ -249,7 +249,7 @@ export default function QuizPage() {
             <span>Question {currentQuestion + 1} / {quiz.questions.length}</span>
             <span>{answers.filter(a => a !== undefined).length} answered</span>
           </div>
-          <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-slate-200/70 dark:bg-slate-700">
+          <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-sky-100/70 dark:bg-slate-700">
             <div
               className="h-full rounded-full bg-gradient-to-r from-sky-400 to-indigo-500 transition-all duration-300"
               style={{ width: `${((currentQuestion + 1) / quiz.questions.length) * 100}%` }}
@@ -274,7 +274,7 @@ export default function QuizPage() {
                   className={`w-full rounded-2xl border px-4 py-4 text-left text-sm font-semibold transition ${
                     isSelected
                       ? 'border-sky-500 bg-sky-500 text-white shadow-lg shadow-sky-500/25'
-                      : 'border-slate-200/60 bg-white/70 text-slate-900 hover:border-sky-300 hover:bg-sky-50 dark:border-slate-700/60 dark:bg-slate-900/70 dark:text-white dark:hover:bg-slate-800'
+                      : 'border-sky-200/60 bg-sky-50/80 text-slate-900 hover:border-sky-300 hover:bg-sky-50 dark:border-slate-700/60 dark:bg-slate-900/70 dark:text-white dark:hover:bg-slate-800'
                   } ${answered ? 'cursor-default' : 'cursor-pointer'}`}
                 >
                   <span className="flex items-center justify-between">
@@ -315,7 +315,7 @@ export default function QuizPage() {
                   ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900'
                   : answers[idx] !== undefined
                     ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-200'
-                    : 'border border-slate-200/60 bg-white/70 text-slate-500 dark:border-slate-700/60 dark:bg-slate-900/70 dark:text-slate-300'
+                    : 'border border-sky-200/60 bg-sky-50/80 text-slate-600 dark:border-slate-700/60 dark:bg-slate-900/70 dark:text-slate-300'
               }`}>
               {idx + 1}
             </button>

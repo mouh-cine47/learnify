@@ -95,9 +95,9 @@ export default function ProfilePage() {
   };
 
   if (loading) return (
-    <div className="flex items-center justify-center min-h-screen">
-      <p className="text-gray-500">Loading profile...</p>
-    </div>
+    <AnimatedPage className="min-h-screen">
+      <div className="flex min-h-screen items-center justify-center text-muted">Loading profile...</div>
+    </AnimatedPage>
   );
 
   if (error) return (
@@ -116,37 +116,30 @@ export default function ProfilePage() {
           <div className="h-32 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-900 dark:to-purple-900" />
 
           <div className="px-8 pb-8">
-            {/* Avatar + Info */}
-            <div className="flex flex-col items-start gap-6 mb-8 -mt-16 md:flex-row md:items-end">
-              <div className="flex items-center justify-center w-32 h-32 text-4xl font-bold text-white bg-blue-600 border-4 border-white rounded-full dark:border-gray-800">
+              <div className="-mt-12 flex flex-col items-start gap-6 md:flex-row md:items-end">
+              <div className="flex h-24 w-24 items-center justify-center rounded-3xl bg-gradient-to-br from-sky-400 via-indigo-500 to-violet-500 text-3xl font-semibold text-white shadow-lg shadow-sky-500/30">
                 {profile?.firstName?.[0]?.toUpperCase() || '?'}
               </div>
               <div>
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">{fullName || 'No name'}</h1>
-                <p className="mt-1 text-gray-600 capitalize dark:text-gray-400">{profile?.role}</p>
+                <h1 className="text-2xl font-semibold text-sky-700 dark:text-white">{fullName || 'No name'}</h1>
+                <p className="mt-1 text-sm capitalize text-sky-600">{profile?.role}</p>
               </div>
             </div>
 
             {/* Edit Form */}
             {editing ? (
-              <div className="p-6 mb-8 space-y-4 border border-gray-200 rounded-lg dark:border-gray-700">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block mb-1 text-sm font-semibold text-gray-700 dark:text-gray-300">First Name</label>
-                    <input
-                      value={form.firstName}
-                      onChange={e => setForm(f => ({ ...f, firstName: e.target.value }))}
-                      className="w-full px-3 py-2 text-gray-900 bg-white border border-gray-300 rounded-lg dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                  <div>
-                    <label className="block mb-1 text-sm font-semibold text-gray-700 dark:text-gray-300">Last Name</label>
-                    <input
-                      value={form.lastName}
-                      onChange={e => setForm(f => ({ ...f, lastName: e.target.value }))}
-                      className="w-full px-3 py-2 text-gray-900 bg-white border border-gray-300 rounded-lg dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
+              <div className="mt-8 rounded-2xl border border-sky-300/60 bg-sky-100/70 p-6 dark:border-slate-700/60 dark:bg-slate-900/70">
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <Input
+                    label="First name"
+                    value={form.firstName}
+                    onChange={e => setForm(f => ({ ...f, firstName: e.target.value }))}
+                  />
+                  <Input
+                    label="Last name"
+                    value={form.lastName}
+                    onChange={e => setForm(f => ({ ...f, lastName: e.target.value }))}
+                  />
                 </div>
                 <div>
                   <label className="block mb-1 text-sm font-semibold text-gray-700 dark:text-gray-300">Bio</label>
@@ -210,28 +203,28 @@ export default function ProfilePage() {
             {/* Info Grid */}
             <div className="grid grid-cols-1 gap-8 mb-8 mt-8 md:grid-cols-2">
               <div>
-                <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">Personal Information</h2>
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3">
-                    <User size={18} className="text-gray-400" />
+                <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Personal information</h2>
+                <div className="mt-4 space-y-4">
+                  <div className="flex items-center gap-3 rounded-2xl border border-sky-300/60 bg-sky-100/70 p-4 dark:border-slate-700/60 dark:bg-slate-900/70">
+                    <User size={18} className="text-sky-500 dark:text-slate-400" />
                     <div>
-                      <p className="text-xs text-gray-500">Full Name</p>
-                      <p className="font-semibold text-gray-900 dark:text-white">{fullName || '—'}</p>
+                      <p className="text-xs text-sky-600">Full name</p>
+                      <p className="font-semibold text-slate-900 dark:text-white">{fullName || '—'}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <Mail size={18} className="text-gray-400" />
+                  <div className="flex items-center gap-3 rounded-2xl border border-sky-300/60 bg-sky-100/70 p-4 dark:border-slate-700/60 dark:bg-slate-900/70">
+                    <Mail size={18} className="text-sky-500 dark:text-slate-400" />
                     <div>
-                      <p className="text-xs text-gray-500">Email</p>
-                      <p className="font-semibold text-gray-900 dark:text-white">{profile?.email}</p>
+                      <p className="text-xs text-sky-600">Email</p>
+                      <p className="font-semibold text-slate-900 dark:text-white">{profile?.email}</p>
                     </div>
                   </div>
                   {profile?.bio && (
-                    <div className="flex items-start gap-3">
-                      <MapPin size={18} className="text-gray-400 mt-0.5" />
+                    <div className="flex items-start gap-3 rounded-2xl border border-sky-300/60 bg-sky-100/70 p-4 dark:border-slate-700/60 dark:bg-slate-900/70">
+                      <MapPin size={18} className="mt-0.5 text-sky-500 dark:text-slate-400" />
                       <div>
-                        <p className="text-xs text-gray-500">Bio</p>
-                        <p className="font-semibold text-gray-900 dark:text-white">{profile.bio}</p>
+                        <p className="text-xs text-sky-600">Bio</p>
+                        <p className="font-semibold text-slate-900 dark:text-white">{profile.bio}</p>
                       </div>
                     </div>
                   )}
@@ -239,22 +232,22 @@ export default function ProfilePage() {
               </div>
 
               <div>
-                <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">Learning Stats</h2>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3 p-4 rounded-lg bg-blue-50 dark:bg-blue-900/30">
-                    <Award size={20} className="text-blue-600 dark:text-blue-400" />
+                <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Learning stats</h2>
+                <div className="mt-4 space-y-3">
+                  <div className="flex items-center gap-3 rounded-2xl border border-sky-300/60 bg-sky-100/70 p-4 dark:border-slate-700/60 dark:bg-slate-900/70">
+                    <Settings size={18} className="text-sky-500 dark:text-slate-400" />
                     <div>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">Member since</p>
-                      <p className="font-semibold text-gray-900 dark:text-white">
+                      <p className="text-xs text-sky-600">Member since</p>
+                      <p className="font-semibold text-slate-900 dark:text-white">
                         {profile?.createdAt ? new Date(profile.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : '—'}
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 p-4 rounded-lg bg-green-50 dark:bg-green-900/30">
-                    <BookOpen size={20} className="text-green-600 dark:text-green-400" />
+                  <div className="flex items-center gap-3 rounded-2xl border border-sky-300/60 bg-sky-100/70 p-4 dark:border-slate-700/60 dark:bg-slate-900/70">
+                    <BookOpen size={18} className="text-sky-500 dark:text-slate-400" />
                     <div>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">Enrolled courses</p>
-                      <p className="font-semibold text-gray-900 dark:text-white">{enrolledCourses.length}</p>
+                      <p className="text-xs text-sky-600">Enrolled courses</p>
+                      <p className="font-semibold text-slate-900 dark:text-white">{enrolledCourses.length}</p>
                     </div>
                   </div>
                 </div>
@@ -267,9 +260,9 @@ export default function ProfilePage() {
                 <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">My Courses</h2>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   {enrolledCourses.map(course => (
-                    <div key={course._id} className="p-4 border border-gray-200 rounded-lg dark:border-gray-700">
-                      <h3 className="font-semibold text-gray-900 dark:text-white">{course.title}</h3>
-                      <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{course.category}</p>
+                    <div key={course._id} className="rounded-2xl border border-sky-300/60 bg-sky-100/70 p-4 dark:border-slate-700/60 dark:bg-slate-900/70">
+                      <h3 className="font-semibold text-slate-900 dark:text-white">{course.title}</h3>
+                      <p className="mt-1 text-sm text-muted">{course.category}</p>
                     </div>
                   ))}
                 </div>

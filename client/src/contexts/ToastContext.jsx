@@ -66,7 +66,7 @@ export const ToastProvider = ({ children }) => {
                 transition={{ duration: 0.25, ease: 'easeOut' }}
                 className={`glass flex items-start gap-3 rounded-2xl border px-4 py-3 ${styles.ring} ${styles.glow}`}
               >
-                <div className={`mt-0.5 rounded-full bg-white/70 p-1.5 dark:bg-slate-800/70 ${styles.text}`}>
+                <div className={`mt-0.5 rounded-full bg-sky-50/90 p-1.5 dark:bg-slate-800/70 ${styles.text}`}>
                   <Icon size={16} />
                 </div>
                 <div className="flex-1 text-sm text-slate-700 dark:text-slate-200">
@@ -74,7 +74,7 @@ export const ToastProvider = ({ children }) => {
                 </div>
                 <button
                   onClick={() => remove(toast.id)}
-                  className="rounded-full p-1 text-slate-400 transition hover:bg-slate-200/60 hover:text-slate-700 dark:hover:bg-slate-700/60 dark:hover:text-slate-100"
+                  className="rounded-full p-1 text-slate-400 transition hover:bg-sky-100/70 hover:text-slate-700 dark:hover:bg-slate-700/60 dark:hover:text-slate-100"
                   aria-label="Dismiss notification"
                 >
                   <X size={16} />

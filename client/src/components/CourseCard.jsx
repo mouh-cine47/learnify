@@ -25,7 +25,7 @@ export default function CourseCard({ course }) {
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent" />
         {course.category && (
-          <span className="absolute badge left-4 top-4 bg-white/80 text-slate-700">
+          <span className="badge absolute left-4 top-4 bg-sky-50/90 text-slate-700">
             {course.category}
           </span>
         )}
@@ -34,7 +34,7 @@ export default function CourseCard({ course }) {
       <div className="flex flex-col gap-3 p-5">
         <div className="flex flex-wrap items-center gap-2">
           {course.level && (
-            <span className="badge bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+            <span className="badge bg-sky-100 text-sky-700 dark:bg-slate-800 dark:text-slate-300">
               {course.level}
             </span>
           )}
@@ -45,13 +45,13 @@ export default function CourseCard({ course }) {
             {course.title}
           </h3>
           {course.description && (
-            <p className="mt-2 text-sm text-slate-500 dark:text-slate-400 line-clamp-2">
+            <p className="mt-2 text-sm text-muted line-clamp-2">
               {course.description}
             </p>
           )}
         </div>
 
-        <div className="flex flex-wrap items-center gap-4 mt-auto text-xs text-slate-500 dark:text-slate-400">
+        <div className="mt-auto flex flex-wrap items-center gap-4 text-xs text-muted">
           <span className="flex items-center gap-1">
             <Users size={14} />
             {(course.studentsEnrolled?.length ?? course.students ?? 0).toLocaleString()} learners
@@ -65,7 +65,7 @@ export default function CourseCard({ course }) {
         </div>
 
         {instructorName && (
-          <p className="text-xs text-slate-400">By {instructorName}</p>
+          <p className="text-xs text-subtle">By {instructorName}</p>
         )}
 
         <Link
