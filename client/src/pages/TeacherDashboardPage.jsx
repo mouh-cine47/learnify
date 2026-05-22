@@ -53,12 +53,12 @@ function Modal({ title, subtitle, onClose, children }) {
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
       <div className="surface w-full max-w-lg rounded-3xl max-h-[90vh] overflow-y-auto">
-        <div className="sticky top-0 z-10 flex items-start justify-between border-b border-slate-200/60 bg-white/80 p-6 pb-4 dark:border-slate-700/60 dark:bg-slate-900/80">
+        <div className="sticky top-0 z-10 flex items-start justify-between border-b border-sky-200/60 bg-sky-50/85 p-6 pb-4 dark:border-slate-700/60 dark:bg-slate-900/80">
           <div>
             <h2 className="text-xl font-semibold text-slate-900 dark:text-white">{title}</h2>
             {subtitle && <p className="mt-0.5 text-sm text-slate-500 dark:text-slate-400">{subtitle}</p>}
           </div>
-          <button onClick={onClose} className="rounded-2xl p-1.5 text-slate-500 transition hover:bg-slate-100 dark:hover:bg-slate-800">
+          <button onClick={onClose} className="rounded-2xl p-1.5 text-slate-500 transition hover:bg-sky-50/80 dark:hover:bg-slate-800">
             <X size={18} />
           </button>
         </div>
@@ -117,7 +117,7 @@ function FileUploadZone({ file, onChange, existingFileUrl, existingFileType }) {
         className={`relative flex flex-col items-center justify-center gap-2 p-6 border-2 border-dashed rounded-xl cursor-pointer transition
           ${dragOver
             ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
-            : 'border-gray-200 dark:border-gray-600 hover:border-blue-400 bg-gray-50 dark:bg-gray-700/40'
+            : 'border-sky-200 dark:border-gray-600 hover:border-blue-400 bg-sky-50 dark:bg-gray-700/40'
           }`}
       >
         <input
@@ -147,7 +147,7 @@ function FileUploadZone({ file, onChange, existingFileUrl, existingFileType }) {
             <button
               type="button"
               onClick={e => { e.stopPropagation(); onChange(null); }}
-              className="p-1 ml-auto text-gray-400 transition rounded hover:bg-gray-200 dark:hover:bg-gray-600 hover:text-red-500"
+              className="p-1 ml-auto text-gray-400 transition rounded hover:bg-sky-100 dark:hover:bg-gray-600 hover:text-red-500"
             >
               <X size={16} />
             </button>
@@ -193,7 +193,7 @@ function FileViewer({ fileType, lessonId }) {
       </div>
 
       {show && (
-        <div className="mt-2 overflow-hidden border border-gray-200 rounded-xl dark:border-gray-600">
+        <div className="mt-2 overflow-hidden border border-sky-200/70 rounded-xl dark:border-gray-600">
           {fileType === 'pdf' ? (
             <iframe
               src={fileUrl}
@@ -524,7 +524,7 @@ function LessonRow({ lesson, onDelete, onEdit }) {
   const fileType = lesson.fileType;
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-slate-200/60 bg-white/70 dark:border-slate-700/60 dark:bg-slate-900/70">
+    <div className="overflow-hidden rounded-2xl border border-sky-200/60 bg-sky-50/80 dark:border-slate-700/60 dark:bg-slate-900/70">
       <div className="flex items-center justify-between px-4 py-3">
         <div className="flex items-center min-w-0 gap-3">
           {fileType === 'pdf'
@@ -544,7 +544,7 @@ function LessonRow({ lesson, onDelete, onEdit }) {
           </div>
         </div>
         <div className="flex items-center flex-shrink-0 gap-2 ml-3">
-          <button onClick={() => onEdit(lesson)} className="rounded-2xl p-1.5 text-slate-500 transition hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-white" title="Edit">
+          <button onClick={() => onEdit(lesson)} className="rounded-2xl p-1.5 text-slate-500 transition hover:bg-sky-100/80 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-white" title="Edit">
             <Edit size={14} />
           </button>
           <button onClick={handleDelete} disabled={deleting} className="rounded-2xl p-1.5 text-slate-500 transition hover:bg-rose-100 hover:text-rose-600 dark:hover:bg-rose-500/10 dark:hover:text-rose-200 disabled:opacity-50" title="Delete">
@@ -633,7 +633,7 @@ function CreateQuizModal({ course, onClose, notify }) {
 
       <div className="mt-6 space-y-5">
         {questions.map((q, qi) => (
-          <div key={qi} className="p-4 border border-gray-200 dark:border-gray-600 rounded-xl bg-gray-50 dark:bg-gray-700/50">
+          <div key={qi} className="p-4 border border-sky-200 dark:border-gray-600 rounded-xl bg-sky-50 dark:bg-gray-700/50">
             <div className="flex items-center justify-between mb-3">
               <span className="text-sm font-bold text-gray-700 dark:text-gray-300">Question {qi + 1}</span>
               {questions.length > 1 && (
@@ -753,7 +753,7 @@ function CourseCard({ course, onDelete, onEdit, onLessonAdded, notify }) {
               { label: 'Lessons', value: course.lessons?.length ?? 0, icon: BookOpen },
               { label: 'Passed', value: course.studentsPassed?.length ?? 0, icon: Layers },
             ].map(({ label, value, icon: Icon }) => (
-              <div key={label} className="flex items-center gap-2 p-3 rounded-xl bg-gray-50 dark:bg-gray-700/50">
+              <div key={label} className="flex items-center gap-2 p-3 rounded-xl bg-sky-50 dark:bg-gray-700/50">
                 <Icon size={16} className="flex-shrink-0 text-blue-400" />
                 <div>
                   <p className="text-xs text-gray-500 dark:text-gray-400">{label}</p>

@@ -181,7 +181,7 @@ function CertCard({ cert, studentName }) {
   return (
     <div className="surface overflow-hidden rounded-3xl transition hover:-translate-y-1">
       {/* Canvas preview */}
-      <div className="bg-slate-100 p-3 dark:bg-slate-950">
+      <div className="bg-sky-50/90 p-3 dark:bg-slate-950">
         <canvas
           ref={canvasRef}
           width={700}
@@ -263,7 +263,7 @@ export default function CertificatePage() {
           title="Certificates"
           subtitle={`${certificates.length} certificate${certificates.length !== 1 ? 's' : ''} earned`}
           action={
-            <div className="flex items-center gap-2 rounded-2xl bg-amber-100 px-3 py-2 text-xs font-semibold text-amber-700 dark:bg-amber-500/15 dark:text-amber-200">
+            <div className="flex items-center gap-2 rounded-2xl bg-slate-900 px-3 py-2 text-xs font-semibold text-white shadow-sm dark:bg-amber-500/15 dark:text-amber-200">
               <Award size={14} /> Verified achievements
             </div>
           }

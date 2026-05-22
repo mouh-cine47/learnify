@@ -62,7 +62,7 @@ export default function CoursesPage() {
 
         <div className="mt-8 grid gap-4 lg:grid-cols-[1.4fr_0.6fr]">
           <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-subtle" size={18} />
             <input
               type="text"
               placeholder="Search courses, skills, or instructors"
@@ -71,7 +71,7 @@ export default function CoursesPage() {
               className="input pl-12"
             />
           </div>
-          <div className="surface flex items-center gap-3 rounded-2xl px-4 py-3 text-sm text-slate-500 dark:text-slate-400">
+          <div className="surface flex items-center gap-3 rounded-2xl px-4 py-3 text-sm text-muted">
             <SlidersHorizontal size={16} />
             Smart filters enabled
           </div>
@@ -85,7 +85,7 @@ export default function CoursesPage() {
               className={`rounded-full px-4 py-2 text-xs font-semibold transition ${
                 selectedCategory === cat
                   ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900'
-                  : 'border border-slate-200/60 bg-white/70 text-slate-600 hover:border-slate-300 dark:border-slate-700/60 dark:bg-slate-900/70 dark:text-slate-300'
+                  : 'border border-sky-200/60 bg-sky-50/80 text-slate-700 hover:border-sky-300 dark:border-slate-700/60 dark:bg-slate-900/70 dark:text-slate-300'
               }`}
             >
               {cat}

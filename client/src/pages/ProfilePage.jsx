@@ -56,7 +56,7 @@ export default function ProfilePage() {
 
   if (loading) return (
     <AnimatedPage className="min-h-screen">
-      <div className="flex min-h-screen items-center justify-center text-slate-500">Loading profile...</div>
+      <div className="flex min-h-screen items-center justify-center text-muted">Loading profile...</div>
     </AnimatedPage>
   );
 
@@ -83,18 +83,18 @@ export default function ProfilePage() {
           <div className="h-28 bg-gradient-to-r from-sky-500 via-indigo-500 to-purple-500" />
 
           <div className="px-8 pb-8">
-            <div className="-mt-12 flex flex-col items-start gap-6 md:flex-row md:items-end">
-              <div className="flex h-24 w-24 items-center justify-center rounded-3xl bg-slate-900 text-3xl font-semibold text-white">
+              <div className="-mt-12 flex flex-col items-start gap-6 md:flex-row md:items-end">
+              <div className="flex h-24 w-24 items-center justify-center rounded-3xl bg-gradient-to-br from-sky-400 via-indigo-500 to-violet-500 text-3xl font-semibold text-white shadow-lg shadow-sky-500/30">
                 {profile?.firstName?.[0]?.toUpperCase() || '?'}
               </div>
               <div>
-                <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">{fullName || 'No name'}</h1>
-                <p className="mt-1 text-sm capitalize text-slate-500 dark:text-slate-400">{profile?.role}</p>
+                <h1 className="text-2xl font-semibold text-sky-700 dark:text-white">{fullName || 'No name'}</h1>
+                <p className="mt-1 text-sm capitalize text-sky-600">{profile?.role}</p>
               </div>
             </div>
 
             {editing ? (
-              <div className="mt-8 rounded-2xl border border-slate-200/60 bg-white/70 p-6 dark:border-slate-700/60 dark:bg-slate-900/70">
+              <div className="mt-8 rounded-2xl border border-sky-300/60 bg-sky-100/70 p-6 dark:border-slate-700/60 dark:bg-slate-900/70">
                 <div className="grid gap-4 sm:grid-cols-2">
                   <Input
                     label="First name"
@@ -133,25 +133,25 @@ export default function ProfilePage() {
               <div>
                 <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Personal information</h2>
                 <div className="mt-4 space-y-4">
-                  <div className="flex items-center gap-3 rounded-2xl border border-slate-200/60 bg-white/70 p-4 dark:border-slate-700/60 dark:bg-slate-900/70">
-                    <User size={18} className="text-slate-400" />
+                  <div className="flex items-center gap-3 rounded-2xl border border-sky-300/60 bg-sky-100/70 p-4 dark:border-slate-700/60 dark:bg-slate-900/70">
+                    <User size={18} className="text-sky-500 dark:text-slate-400" />
                     <div>
-                      <p className="text-xs text-slate-400">Full name</p>
+                      <p className="text-xs text-sky-600">Full name</p>
                       <p className="font-semibold text-slate-900 dark:text-white">{fullName || '—'}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 rounded-2xl border border-slate-200/60 bg-white/70 p-4 dark:border-slate-700/60 dark:bg-slate-900/70">
-                    <Mail size={18} className="text-slate-400" />
+                  <div className="flex items-center gap-3 rounded-2xl border border-sky-300/60 bg-sky-100/70 p-4 dark:border-slate-700/60 dark:bg-slate-900/70">
+                    <Mail size={18} className="text-sky-500 dark:text-slate-400" />
                     <div>
-                      <p className="text-xs text-slate-400">Email</p>
+                      <p className="text-xs text-sky-600">Email</p>
                       <p className="font-semibold text-slate-900 dark:text-white">{profile?.email}</p>
                     </div>
                   </div>
                   {profile?.bio && (
-                    <div className="flex items-start gap-3 rounded-2xl border border-slate-200/60 bg-white/70 p-4 dark:border-slate-700/60 dark:bg-slate-900/70">
-                      <MapPin size={18} className="mt-0.5 text-slate-400" />
+                    <div className="flex items-start gap-3 rounded-2xl border border-sky-300/60 bg-sky-100/70 p-4 dark:border-slate-700/60 dark:bg-slate-900/70">
+                      <MapPin size={18} className="mt-0.5 text-sky-500 dark:text-slate-400" />
                       <div>
-                        <p className="text-xs text-slate-400">Bio</p>
+                        <p className="text-xs text-sky-600">Bio</p>
                         <p className="font-semibold text-slate-900 dark:text-white">{profile.bio}</p>
                       </div>
                     </div>
@@ -162,19 +162,19 @@ export default function ProfilePage() {
               <div>
                 <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Learning stats</h2>
                 <div className="mt-4 space-y-3">
-                  <div className="flex items-center gap-3 rounded-2xl border border-slate-200/60 bg-white/70 p-4 dark:border-slate-700/60 dark:bg-slate-900/70">
-                    <Settings size={18} className="text-slate-400" />
+                  <div className="flex items-center gap-3 rounded-2xl border border-sky-300/60 bg-sky-100/70 p-4 dark:border-slate-700/60 dark:bg-slate-900/70">
+                    <Settings size={18} className="text-sky-500 dark:text-slate-400" />
                     <div>
-                      <p className="text-xs text-slate-400">Member since</p>
+                      <p className="text-xs text-sky-600">Member since</p>
                       <p className="font-semibold text-slate-900 dark:text-white">
                         {profile?.createdAt ? new Date(profile.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : '—'}
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 rounded-2xl border border-slate-200/60 bg-white/70 p-4 dark:border-slate-700/60 dark:bg-slate-900/70">
-                    <BookOpen size={18} className="text-slate-400" />
+                  <div className="flex items-center gap-3 rounded-2xl border border-sky-300/60 bg-sky-100/70 p-4 dark:border-slate-700/60 dark:bg-slate-900/70">
+                    <BookOpen size={18} className="text-sky-500 dark:text-slate-400" />
                     <div>
-                      <p className="text-xs text-slate-400">Enrolled courses</p>
+                      <p className="text-xs text-sky-600">Enrolled courses</p>
                       <p className="font-semibold text-slate-900 dark:text-white">{enrolledCourses.length}</p>
                     </div>
                   </div>
@@ -187,9 +187,9 @@ export default function ProfilePage() {
                 <h2 className="text-lg font-semibold text-slate-900 dark:text-white">My courses</h2>
                 <div className="mt-4 grid gap-4 sm:grid-cols-2">
                   {enrolledCourses.map(course => (
-                    <div key={course._id} className="rounded-2xl border border-slate-200/60 bg-white/70 p-4 dark:border-slate-700/60 dark:bg-slate-900/70">
+                    <div key={course._id} className="rounded-2xl border border-sky-300/60 bg-sky-100/70 p-4 dark:border-slate-700/60 dark:bg-slate-900/70">
                       <h3 className="font-semibold text-slate-900 dark:text-white">{course.title}</h3>
-                      <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{course.category}</p>
+                      <p className="mt-1 text-sm text-muted">{course.category}</p>
                     </div>
                   ))}
                 </div>
