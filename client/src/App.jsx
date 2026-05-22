@@ -1,28 +1,83 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
-import { AuthProvider } from './context/AuthContext'
-import Home from './pages/Home/Home'
-import Login from './pages/Login/Login'
-import Signup from './pages/Signup/Signup'
-import Dashboard from './pages/Dashboard/Dashboard'
-import StudentDashboard from './pages/Dashboard/Student/StudentDashboard'
-import TeacherDashboard from './pages/Dashboard/Teacher/TeacherDashboard'
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { ToastProvider } from './contexts/ToastContext';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import LoginPage from './pages/LoginPage';
+import HomePage from './pages/HomePage';
+import CoursesPage from './pages/CoursesPage';
+import CoursePage from './pages/CoursePage';
+import DashboardPage from './pages/DashboardPage';
+import ProfilePage from './pages/ProfilePage';
+import QuizPage from './pages/QuizPage';
+import CertificatePage from './pages/CertificatePage';
+import TeacherDashboardPage from './pages/TeacherDashboardPage';
 
-function App() {
-  return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/dashboard/student" element={<StudentDashboard />} />
-          <Route path="/dashboard/teacher" element={<TeacherDashboard />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
-  )
+// Protected Route Component
+function ProtectedRoute({ children, role }) {
+  const { user, isLoading } = useAuth();
+
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="surface rounded-3xl px-6 py-4 text-sm text-slate-500 dark:text-slate-300">
+          Loading your workspace...
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // check role
+  if (role && user.role !== role) {
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
 }
 
-export default App
+function AppRoutes() {
+  const { user } = useAuth();
+  const location = useLocation();
+
+  return (
+    <div className="flex min-h-screen flex-col page-bg">
+      {user && <Navbar />}
+      <main className="flex-1">
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
+            <Route path="/courses" element={<ProtectedRoute><CoursesPage /></ProtectedRoute>} />
+            <Route path="/course/:id" element={<ProtectedRoute><CoursePage /></ProtectedRoute>} />
+            <Route path="/course/:id/quiz" element={<ProtectedRoute><QuizPage /></ProtectedRoute>} />
+            <Route path="/dashboard" element={<ProtectedRoute role="student"><DashboardPage /></ProtectedRoute>} />
+            <Route path="/teacher-dashboard" element={<ProtectedRoute role="teacher"><TeacherDashboardPage /></ProtectedRoute>} />
+            <Route path="/certificates" element={<ProtectedRoute><CertificatePage /></ProtectedRoute>} />
+            <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+          </Routes>
+        </AnimatePresence>
+      </main>
+      {user && <Footer />}
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      <ToastProvider>
+        <AuthProvider>
+          <Router>
+            <AppRoutes />
+          </Router>
+        </AuthProvider>
+      </ToastProvider>
+    </ThemeProvider>
+  );
+}

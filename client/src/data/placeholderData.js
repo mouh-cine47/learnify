@@ -1,0 +1,210 @@
+export const categories = [
+  {
+    id: 1,
+    name: 'Web Development',
+    icon: '🌐',
+    count: 45,
+  },
+  {
+    id: 2,
+    name: 'Mobile Apps',
+    icon: '📱',
+    count: 32,
+  },
+  {
+    id: 3,
+    name: 'Data Science',
+    icon: '📊',
+    count: 28,
+  },
+  {
+    id: 4,
+    name: 'Cloud Computing',
+    icon: '☁️',
+    count: 24,
+  },
+  {
+    id: 5,
+    name: 'Artificial Intelligence',
+    icon: '🤖',
+    count: 35,
+  },
+  {
+    id: 6,
+    name: 'Cybersecurity',
+    icon: '🔒',
+    count: 19,
+  },
+];
+
+export const courses = [
+  {
+    id: 1,
+    title: 'React.js Basics',
+    description: 'Learn the fundamentals of React.js and build interactive user interfaces.',
+    instructor: {
+      name: 'Sarah Johnson',
+      avatar: 'https://i.pravatar.cc/150?img=1',
+    },
+    price: 49.99,
+    rating: 4.8,
+    students: 2456,
+    category: 'Web Development',
+    image: 'https://images.unsplash.com/photo-1633356122544-f134ef2944f0?w=500&h=300&fit=crop',
+    lessons: [
+      { id: 1, title: 'Introduction to React', duration: '15 min' },
+      { id: 2, title: 'JSX and Components', duration: '20 min' },
+      { id: 3, title: 'State and Props', duration: '25 min' },
+      { id: 4, title: 'Hooks', duration: '30 min' },
+      { id: 5, title: 'Routing', duration: '20 min' },
+    ],
+  },
+  {
+    id: 2,
+    title: 'Python for Beginners',
+    description: 'Master Python programming from scratch. Perfect for beginners.',
+    instructor: {
+      name: 'Mike Chen',
+      avatar: 'https://i.pravatar.cc/150?img=2',
+    },
+    price: 39.99,
+    rating: 4.9,
+    students: 3891,
+    category: 'Web Development',
+    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&h=300&fit=crop',
+    lessons: [
+      { id: 1, title: 'Setup and Basics', duration: '18 min' },
+      { id: 2, title: 'Variables and Types', duration: '22 min' },
+      { id: 3, title: 'Control Flow', duration: '25 min' },
+      { id: 4, title: 'Functions', duration: '28 min' },
+    ],
+  },
+  {
+    id: 3,
+    title: 'Full-Stack Web Development',
+    description: 'Complete guide to building full-stack applications with Node.js and React.',
+    instructor: {
+      name: 'Emma Wilson',
+      avatar: 'https://i.pravatar.cc/150?img=3',
+    },
+    price: 79.99,
+    rating: 4.7,
+    students: 1923,
+    category: 'Web Development',
+    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&h=300&fit=crop',
+    lessons: [
+      { id: 1, title: 'Backend Basics', duration: '30 min' },
+      { id: 2, title: 'Database Design', duration: '35 min' },
+      { id: 3, title: 'API Development', duration: '40 min' },
+      { id: 4, title: 'Frontend Integration', duration: '45 min' },
+    ],
+  },
+  {
+    id: 4,
+    title: 'Mobile App Development',
+    description: 'Build native and cross-platform mobile applications.',
+    instructor: {
+      name: 'Alex Rodriguez',
+      avatar: 'https://i.pravatar.cc/150?img=4',
+    },
+    price: 69.99,
+    rating: 4.6,
+    students: 1562,
+    category: 'Mobile Apps',
+    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&h=300&fit=crop',
+    lessons: [
+      { id: 1, title: 'Mobile Dev Concepts', duration: '25 min' },
+      { id: 2, title: 'Flutter Setup', duration: '20 min' },
+      { id: 3, title: 'Building UIs', duration: '35 min' },
+      { id: 4, title: 'State Management', duration: '30 min' },
+    ],
+  },
+  {
+    id: 5,
+    title: 'Data Science Fundamentals',
+    description: 'Learn data analysis, visualization, and machine learning basics.',
+    instructor: {
+      name: 'Dr. Lisa Anderson',
+      avatar: 'https://i.pravatar.cc/150?img=5',
+    },
+    price: 59.99,
+    rating: 4.8,
+    students: 2134,
+    category: 'Data Science',
+    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&h=300&fit=crop',
+    lessons: [
+      { id: 1, title: 'NumPy & Pandas', duration: '40 min' },
+      { id: 2, title: 'Data Visualization', duration: '35 min' },
+      { id: 3, title: 'Statistics Basics', duration: '45 min' },
+      { id: 4, title: 'Intro to ML', duration: '50 min' },
+    ],
+  },
+  {
+    id: 6,
+    title: 'Cloud Engineering AWS',
+    description: 'Master AWS cloud services and become a certified cloud engineer.',
+    instructor: {
+      name: 'David Kumar',
+      avatar: 'https://i.pravatar.cc/150?img=6',
+    },
+    price: 89.99,
+    rating: 4.7,
+    students: 987,
+    category: 'Cloud Computing',
+    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&h=300&fit=crop',
+    lessons: [
+      { id: 1, title: 'AWS Fundamentals', duration: '30 min' },
+      { id: 2, title: 'EC2 and Storage', duration: '40 min' },
+      { id: 3, title: 'Networking', duration: '35 min' },
+      { id: 4, title: 'Security', duration: '45 min' },
+    ],
+  },
+];
+
+export const enrolledCourses = [
+  {
+    id: 1,
+    title: 'React.js Basics',
+    instructor: 'Sarah Johnson',
+    progress: 60,
+    lessons: [true, true, true, false, false],
+  },
+  {
+    id: 2,
+    title: 'Full-Stack Web Development',
+    instructor: 'Emma Wilson',
+    progress: 35,
+    lessons: [true, false, false, false],
+  },
+  {
+    id: 5,
+    title: 'Data Science Fundamentals',
+    instructor: 'Dr. Lisa Anderson',
+    progress: 80,
+    lessons: [true, true, true, false],
+  },
+];
+
+export const upcomingLessons = [
+  {
+    id: 1,
+    courseName: 'React.js Basics',
+    lessonTitle: 'Hooks',
+    time: 'Today at 2:00 PM',
+    instructor: 'Sarah Johnson',
+  },
+  {
+    id: 2,
+    courseName: 'Full-Stack Web Development',
+    lessonTitle: 'Database Design',
+    time: 'Tomorrow at 10:00 AM',
+    instructor: 'Emma Wilson',
+  },
+  {
+    id: 3,
+    courseName: 'Data Science Fundamentals',
+    lessonTitle: 'Intro to ML',
+    time: 'In 3 days at 3:30 PM',
+    instructor: 'Dr. Lisa Anderson',
+  },
+];

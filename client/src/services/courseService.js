@@ -1,11 +1,16 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+import { safeJson } from '../utils/safeJson'
+import { getApiBaseUrl } from '../utils/apiBase'
+
+const API_BASE_URL = getApiBaseUrl()
 
 export async function fetchCourses() {
-  const response = await fetch(`${API_BASE_URL}/api/courses`)
+  const url = `${API_BASE_URL}/courses`
+  console.log('fetchCourses -> URL:', url)
+  const response = await fetch(url)
 
   if (!response.ok) {
     throw new Error('Unable to fetch courses')
   }
 
-  return response.json()
+  return safeJson(response)
 }
