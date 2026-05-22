@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Download, Loader2, Trophy, Award } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 import AnimatedPage from '../components/motion/AnimatedPage';
 import SectionHeader from '../components/ui/SectionHeader';
 import EmptyState from '../components/ui/EmptyState';
@@ -213,6 +214,7 @@ function CertCard({ cert, studentName }) {
 // Main Page
 export default function CertificatePage() {
   const { user } = useAuth();
+  const { isDark } = useTheme();
   const [certificates, setCertificates] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -263,7 +265,13 @@ export default function CertificatePage() {
           title="Certificates"
           subtitle={`${certificates.length} certificate${certificates.length !== 1 ? 's' : ''} earned`}
           action={
-            <div className="flex items-center gap-2 rounded-2xl bg-slate-900 px-3 py-2 text-xs font-semibold text-white shadow-sm dark:bg-amber-500/15 dark:text-amber-200">
+            <div
+              className={`flex items-center gap-2 rounded-2xl px-3 py-2 text-xs font-semibold shadow-sm ${
+                isDark
+                  ? 'bg-amber-500/15 text-amber-200'
+                  : 'bg-black text-white'
+              }`}
+            >
               <Award size={14} /> Verified achievements
             </div>
           }
