@@ -29,7 +29,9 @@ export default function Navbar() {
       { to: '/', label: 'Home', icon: Sparkles },
       { to: '/courses', label: 'Courses', icon: BookOpen },
       { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-      { to: '/certificates', label: 'Certificates', icon: Award },
+      ...(user?.role !== 'teacher'
+        ? [{ to: '/certificates', label: 'Certificates', icon: Award }]
+        : []),
       ...(user?.role === 'teacher'
         ? [{ to: '/teacher-dashboard', label: 'Teach', icon: GraduationCap }]
         : []),

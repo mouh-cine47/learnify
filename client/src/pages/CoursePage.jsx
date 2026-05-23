@@ -353,7 +353,7 @@ export default function CoursePage() {
                     </button>
                   )}
                   {isEnrolled && hasQuiz && (
-                    <Link to={`/course/${id}/quiz`} className="btn btn-secondary btn-md">
+                    <Link to={`/course/${id}/quiz`} className="btn btn-secondary btn-md border border-sky-200/70 dark:border-slate-700/60">
                       Take quiz
                     </Link>
                   )}

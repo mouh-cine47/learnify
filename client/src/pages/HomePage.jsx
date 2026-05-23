@@ -117,10 +117,10 @@ export default function HomePage() {
             <div className="absolute inset-0 bg-gradient-to-r from-sky-500/10 via-indigo-500/10 to-pink-500/10" />
             <div className="relative grid items-center gap-8 md:grid-cols-[1.1fr_0.9fr]">
               <div>
-                <h2 className="text-3xl font-semibold text-slate-900 dark:text-white">
+                <h2 className="text-3xl font-semibold text-primary">
                   Build momentum with a learning system your team loves.
                 </h2>
-                <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
+                <p className="mt-3 text-sm text-secondary">
                   Capture progress, ship course milestones, and certify outcomes with beautiful dashboards.
                 </p>
               </div>
