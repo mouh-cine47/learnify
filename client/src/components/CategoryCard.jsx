@@ -6,7 +6,7 @@ export default function CategoryCard({ category }) {
       to="/courses"
       className="surface group flex flex-col items-center gap-4 rounded-3xl p-6 text-center transition hover:-translate-y-1"
     >
-      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/80 text-3xl shadow-sm dark:bg-slate-900/70">
+      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-sky-50/80 text-3xl shadow-sm dark:bg-slate-900/70">
         {category.icon}
       </div>
       <div>

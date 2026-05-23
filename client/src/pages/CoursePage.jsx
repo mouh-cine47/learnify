@@ -61,7 +61,7 @@ function FileViewer({ lessonId, fileType }) {
       </button>
 
       {show && (
-        <div className="mt-3 overflow-hidden border border-gray-200 rounded-xl dark:border-gray-600">
+        <div className="mt-3 overflow-hidden border border-sky-200/70 rounded-xl dark:border-gray-600">
           {fileType === 'pdf' ? (
             <iframe
               src={fileUrl}
@@ -106,7 +106,7 @@ function LessonItem({ lesson, isEnrolled, userId }) {
     <div className={`overflow-hidden rounded-2xl border transition
       ${completed
         ? 'border-emerald-200/70 bg-emerald-50/60 dark:border-emerald-500/30 dark:bg-emerald-500/10'
-        : 'border-slate-200/60 bg-white/70 dark:border-slate-700/60 dark:bg-slate-900/70'
+        : 'border-sky-200/60 bg-sky-50/80 dark:border-slate-700/60 dark:bg-slate-900/70'
       }`}>
       <div className="flex items-center gap-3 px-4 py-3">
         {lesson.fileType === 'pdf'
@@ -229,13 +229,13 @@ export default function CoursePage() {
   };
 
   if (loading) return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="flex items-center justify-center min-h-screen bg-sky-50 dark:bg-gray-900">
       <Loader2 size={36} className="text-blue-500 animate-spin" />
     </div>
   );
 
   if (error) return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="flex items-center justify-center min-h-screen bg-sky-50 dark:bg-gray-900">
       <div className="text-center">
         <p className="mb-4 text-xl text-red-500">{error}</p>
         <Link to="/courses" className="text-blue-600 hover:underline">← Back to courses</Link>
@@ -274,12 +274,12 @@ export default function CoursePage() {
             <div className="p-8">
               <div className="flex flex-wrap gap-2">
                 {course.category && (
-                  <span className="badge bg-white/80 text-slate-700">
+                  <span className="badge bg-sky-50/80 text-slate-700">
                     {course.category}
                   </span>
                 )}
                 {course.level && (
-                  <span className="badge bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+                  <span className="badge bg-sky-100 text-sky-700 dark:bg-slate-800 dark:text-slate-300">
                     {course.level}
                   </span>
                 )}
@@ -295,7 +295,7 @@ export default function CoursePage() {
                 </p>
               )}
 
-              <div className="mt-6 grid gap-4 border-y border-slate-200/60 py-6 dark:border-slate-700/60 sm:grid-cols-2">
+              <div className="mt-6 grid gap-4 border-y border-sky-200/60 py-6 dark:border-slate-700/60 sm:grid-cols-2">
                 <div className="flex items-center gap-3">
                   <div className="rounded-2xl bg-sky-500/10 p-2 text-sky-500">
                     <Users size={18} />
@@ -323,8 +323,8 @@ export default function CoursePage() {
               )}
 
               {instructor && (
-                <div className="mt-6 flex items-center gap-3 rounded-2xl border border-slate-200/60 bg-white/70 p-4 dark:border-slate-700/60 dark:bg-slate-900/70">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-900 text-sm font-semibold text-white">
+                <div className="mt-6 flex items-center gap-3 rounded-2xl border border-sky-200/60 bg-sky-50/80 p-4 dark:border-slate-700/60 dark:bg-slate-900/70">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-sky-400 via-indigo-500 to-violet-500 text-sm font-semibold text-white">
                     {instructor.firstName?.[0]}{instructor.lastName?.[0]}
                   </div>
                   <div>
@@ -353,7 +353,7 @@ export default function CoursePage() {
                     </button>
                   )}
                   {isEnrolled && hasQuiz && (
-                    <Link to={`/course/${id}/quiz`} className="btn btn-secondary btn-md">
+                    <Link to={`/course/${id}/quiz`} className="btn btn-secondary btn-md border border-sky-200/70 dark:border-slate-700/60">
                       Take quiz
                     </Link>
                   )}
@@ -380,7 +380,7 @@ export default function CoursePage() {
             </div>
 
             {(isEnrolled || user?.role === 'teacher') && (
-              <div className="mt-6 rounded-2xl border border-slate-200/60 bg-white/70 p-4 dark:border-slate-700/60 dark:bg-slate-900/70">
+              <div className="mt-6 rounded-2xl border border-sky-200/60 bg-sky-50/80 p-4 dark:border-slate-700/60 dark:bg-slate-900/70">
                 <p className="text-xs uppercase tracking-wide text-slate-400">Your progress</p>
                 <p className="mt-2 text-2xl font-semibold text-slate-900 dark:text-white">{progress}%</p>
                 <p className="mt-1 text-xs text-slate-500">{completedLessons} lessons completed</p>

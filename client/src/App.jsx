@@ -58,7 +58,7 @@ function AppRoutes() {
             <Route path="/course/:id/quiz" element={<ProtectedRoute><QuizPage /></ProtectedRoute>} />
             <Route path="/dashboard" element={<ProtectedRoute role="student"><DashboardPage /></ProtectedRoute>} />
             <Route path="/teacher-dashboard" element={<ProtectedRoute role="teacher"><TeacherDashboardPage /></ProtectedRoute>} />
-            <Route path="/certificates" element={<ProtectedRoute><CertificatePage /></ProtectedRoute>} />
+            <Route path="/certificates" element={<ProtectedRoute role="student"><CertificatePage /></ProtectedRoute>} />
             <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
           </Routes>
         </AnimatePresence>

@@ -65,7 +65,6 @@ export default function QuizPage() {
   }, [quiz]);
 
   const handleAnswer = (idx) => {
-    if (answers[currentQuestion] !== undefined) return;
     const next = [...answers];
     next[currentQuestion] = idx;
     setAnswers(next);
@@ -127,6 +126,9 @@ export default function QuizPage() {
   const passed = result?.passed;
   const minutes = timeLeft !== null ? Math.floor(timeLeft / 60) : null;
   const seconds = timeLeft !== null ? String(timeLeft % 60).padStart(2, '0') : null;
+  const q = quiz.questions[currentQuestion];
+  const answered = answers[currentQuestion] !== undefined;
+  const correctAnswer = q.correctAnswer;
 
   // Result screen 
   if (result && !showReview) return (
@@ -136,8 +138,8 @@ export default function QuizPage() {
           <div className={`text-6xl font-semibold mb-4 ${passed ? 'text-emerald-500' : 'text-rose-500'}`}>
             {percentage}%
           </div>
-          <h2 className="mb-2 text-3xl font-semibold text-slate-900 dark:text-white">Quiz completed</h2>
-          <p className="mb-6 text-sm text-slate-500 dark:text-slate-400">
+          <h2 className="mb-2 text-3xl font-semibold text-primary">Quiz completed</h2>
+          <p className="mb-6 text-sm text-secondary">
             {result.score} / {result.total} correct answers
           </p>
 
@@ -181,7 +183,7 @@ export default function QuizPage() {
       <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6">
         <div className="surface rounded-3xl p-8">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-semibold text-slate-900 dark:text-white">Answer review</h2>
+            <h2 className="text-2xl font-semibold text-primary">Answer review</h2>
             <button onClick={() => setShowReview(false)} className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200">✕</button>
           </div>
           <div className="mt-6 space-y-4">
@@ -196,8 +198,8 @@ export default function QuizPage() {
                       ? <CheckCircle2 size={20} className="mt-0.5 text-emerald-500" />
                       : <Circle size={20} className="mt-0.5 text-rose-500" />}
                     <div>
-                      <p className="font-semibold text-slate-900 dark:text-white">Q{idx + 1}. {q.question}</p>
-                      <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
+                      <p className="font-semibold text-primary">Q{idx + 1}. {q.question}</p>
+                      <p className="mt-1 text-sm text-secondary">
                         Your answer: <span className={isCorrect ? 'text-emerald-600 font-semibold' : 'text-rose-600 font-semibold'}>{q.options[chosen] ?? '—'}</span>
                       </p>
                       {!isCorrect && (
@@ -224,19 +226,15 @@ export default function QuizPage() {
     </AnimatedPage>
   );
 
-  //  Quiz screen 
-  const q = quiz.questions[currentQuestion];
-  const answered = answers[currentQuestion] !== undefined;
-
   return (
     <AnimatedPage className="min-h-screen">
       <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6">
         <div className="surface mb-6 rounded-3xl p-6">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <h1 className="text-xl font-semibold text-slate-900 dark:text-white">{quiz.title}</h1>
+            <h1 className="text-xl font-semibold text-primary">{quiz.title}</h1>
             <div className="flex items-center gap-2">
               {timeLeft !== null && (
-                <span className="flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+                <span className="flex items-center gap-1.5 rounded-full bg-sky-50 px-3 py-1 text-xs font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-300">
                   <Clock size={14} /> {minutes}:{seconds}
                 </span>
               )}
@@ -245,11 +243,11 @@ export default function QuizPage() {
               </span>
             </div>
           </div>
-          <div className="mt-4 flex items-center justify-between text-sm text-slate-500 dark:text-slate-400">
+          <div className="mt-4 flex items-center justify-between text-sm text-secondary">
             <span>Question {currentQuestion + 1} / {quiz.questions.length}</span>
             <span>{answers.filter(a => a !== undefined).length} answered</span>
           </div>
-          <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-slate-200/70 dark:bg-slate-700">
+          <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-sky-100/70 dark:bg-slate-700">
             <div
               className="h-full rounded-full bg-gradient-to-r from-sky-400 to-indigo-500 transition-all duration-300"
               style={{ width: `${((currentQuestion + 1) / quiz.questions.length) * 100}%` }}
@@ -263,23 +261,32 @@ export default function QuizPage() {
               {q.courseSection}
             </span>
           )}
-          <h2 className="mb-6 text-xl font-semibold text-slate-900 dark:text-white">{q.question}</h2>
+          <h2 className="mb-6 text-xl font-semibold text-primary">{q.question}</h2>
 
           <div className="mb-6 space-y-3">
             {q.options.map((opt, idx) => {
               const isSelected = answers[currentQuestion] === idx;
+              const showResults = answered;
+              const isCorrectOption = idx === correctAnswer;
               return (
                 <button key={idx} onClick={() => handleAnswer(idx)}
-                  disabled={answered}
                   className={`w-full rounded-2xl border px-4 py-4 text-left text-sm font-semibold transition ${
-                    isSelected
-                      ? 'border-sky-500 bg-sky-500 text-white shadow-lg shadow-sky-500/25'
-                      : 'border-slate-200/60 bg-white/70 text-slate-900 hover:border-sky-300 hover:bg-sky-50 dark:border-slate-700/60 dark:bg-slate-900/70 dark:text-white dark:hover:bg-slate-800'
-                  } ${answered ? 'cursor-default' : 'cursor-pointer'}`}
+                    showResults
+                      ? isCorrectOption
+                        ? 'border-emerald-500 bg-emerald-500 text-white shadow-lg shadow-emerald-500/25'
+                        : isSelected
+                          ? 'border-rose-500 bg-rose-500 text-white shadow-lg shadow-rose-500/25'
+                          : 'border-sky-200/60 bg-sky-50/80 text-primary hover:border-sky-300 hover:bg-sky-50 dark:border-slate-700/60 dark:bg-slate-900/70 dark:text-white dark:hover:bg-slate-800'
+                      : isSelected
+                        ? 'border-sky-500 bg-sky-500 text-white shadow-lg shadow-sky-500/25'
+                        : 'border-sky-200/60 bg-sky-50/80 text-primary hover:border-sky-300 hover:bg-sky-50 dark:border-slate-700/60 dark:bg-slate-900/70 dark:text-white dark:hover:bg-slate-800'
+                  } cursor-pointer`}
                 >
                   <span className="flex items-center justify-between">
                     <span>{opt}</span>
-                    {isSelected && <span>●</span>}
+                    {showResults ? (
+                      isCorrectOption ? <CheckCircle2 size={16} /> : isSelected ? <AlertCircle size={16} /> : null
+                    ) : isSelected && <span>●</span>}
                   </span>
                 </button>
               );
@@ -315,7 +322,7 @@ export default function QuizPage() {
                   ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900'
                   : answers[idx] !== undefined
                     ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-200'
-                    : 'border border-slate-200/60 bg-white/70 text-slate-500 dark:border-slate-700/60 dark:bg-slate-900/70 dark:text-slate-300'
+                      : 'border border-sky-200/60 bg-sky-50/80 text-secondary dark:border-slate-700/60 dark:bg-slate-900/70 dark:text-slate-300'
               }`}>
               {idx + 1}
             </button>

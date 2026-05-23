@@ -112,7 +112,7 @@ export default function DashboardPage() {
             {loading ? (
               <div className="mt-6 space-y-4">
                 {[0, 1, 2].map((item) => (
-                  <div key={item} className="rounded-2xl border border-slate-200/60 p-4 dark:border-slate-700/60">
+                  <div key={item} className="rounded-2xl border border-sky-200/60 p-4 dark:border-slate-700/60">
                     <Skeleton className="h-4 w-2/3" />
                     <Skeleton className="mt-3 h-2 w-full" />
                   </div>
@@ -141,7 +141,7 @@ export default function DashboardPage() {
                   return (
                     <div
                       key={courseId}
-                      className="rounded-2xl border border-slate-200/60 bg-white/70 p-4 transition hover:-translate-y-0.5 dark:border-slate-700/60 dark:bg-slate-900/70"
+                      className="rounded-2xl border border-sky-200/60 bg-sky-50/80 p-4 transition hover:-translate-y-0.5 dark:border-slate-700/60 dark:bg-slate-900/70"
                     >
                       <div className="flex items-start justify-between gap-4">
                         <div>
@@ -155,22 +155,22 @@ export default function DashboardPage() {
                               </span>
                             )}
                           </div>
-                          <p className="mt-1 text-xs text-slate-500">by {instructorName}</p>
+                          <p className="mt-1 text-xs text-muted">by {instructorName}</p>
                         </div>
-                        <span className="text-sm font-semibold text-sky-500">
+                        <span className="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-sky-400 to-indigo-500 px-3 py-1 text-sm font-semibold text-white shadow-sm">
                           {course.progress}%
                         </span>
                       </div>
                       <div className="mt-4">
                         <ProgressBar progress={course.progress} />
                       </div>
-                      <div className="mt-3 flex items-center justify-between text-xs text-slate-500">
+                      <div className="mt-3 flex items-center justify-between text-xs text-muted">
                         <span>
                           {course.completed} of {course.lessonsData?.length ?? 0} lessons completed
                         </span>
                         <Link
                           to={`/course/${courseId}`}
-                          className="font-semibold text-slate-900 hover:text-indigo-500 dark:text-slate-200 dark:hover:text-indigo-300"
+                          className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-br from-sky-400 to-indigo-500 px-3 py-1.5 text-sm font-semibold text-white transition hover:brightness-95 dark:bg-slate-700 dark:text-slate-100"
                         >
                           {course.progress === 100 ? 'Review' : 'Continue'}
                         </Link>
@@ -193,7 +193,7 @@ export default function DashboardPage() {
                   <Skeleton key={item} className="h-16 w-full" />
                 ))
               ) : enrolledCourses.length === 0 ? (
-                <p className="text-sm text-slate-500">No upcoming lessons yet.</p>
+                <p className="text-sm text-muted">No upcoming lessons yet.</p>
               ) : (
                 enrolledCourses
                   .flatMap(course =>
@@ -214,7 +214,7 @@ export default function DashboardPage() {
                     <Link
                       key={lesson._id || lesson.id}
                       to={`/course/${lesson.courseId}`}
-                      className="flex flex-col gap-1 rounded-2xl border border-slate-200/60 bg-white/70 p-4 text-sm transition hover:-translate-y-0.5 dark:border-slate-700/60 dark:bg-slate-900/70"
+                      className="flex flex-col gap-1 rounded-2xl border border-sky-200/60 bg-sky-50/80 p-4 text-sm transition hover:-translate-y-0.5 dark:border-slate-700/60 dark:bg-slate-900/70"
                     >
                       <span className="text-xs uppercase tracking-wide text-slate-400">
                         {lesson.courseName}
@@ -223,7 +223,7 @@ export default function DashboardPage() {
                         {lesson.title}
                       </span>
                       {lesson.fileType && (
-                        <span className="badge w-fit bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-300">
+                        <span className="badge w-fit bg-sky-100 text-sky-700 dark:bg-slate-800 dark:text-slate-300">
                           {lesson.fileType.toUpperCase()}
                         </span>
                       )}

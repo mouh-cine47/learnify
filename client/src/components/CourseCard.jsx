@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { ArrowUpRight, BookOpen, Star, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-export default function CourseCard({ course }) {
+export default function CourseCard({ course, elevated = true }) {
   const courseId = course._id || course.id;
   const instructorName = course.instructor?.name
     || (course.instructor?.firstName
@@ -13,7 +13,7 @@ export default function CourseCard({ course }) {
     <motion.article
       whileHover={{ y: -4 }}
       transition={{ duration: 0.2 }}
-      className="overflow-hidden surface group rounded-3xl"
+      className={`overflow-hidden surface group rounded-3xl ${elevated ? 'card-ring' : ''}`}
     >
       <div className="relative overflow-hidden h-44">
         {course.image ? (
@@ -23,9 +23,9 @@ export default function CourseCard({ course }) {
             <BookOpen size={48} className="text-white/80" />
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/45 via-transparent to-transparent" />
         {course.category && (
-          <span className="absolute badge left-4 top-4 bg-white/80 text-slate-700">
+          <span className="badge absolute left-4 top-4 bg-white/90 text-slate-700 shadow-sm backdrop-blur-sm dark:bg-slate-900/80 dark:text-slate-200">
             {course.category}
           </span>
         )}
@@ -34,25 +34,25 @@ export default function CourseCard({ course }) {
       <div className="flex flex-col gap-3 p-5">
         <div className="flex flex-wrap items-center gap-2">
           {course.level && (
-            <span className="badge bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+            <span className="badge bg-sky-100 text-sky-700 dark:bg-slate-800 dark:text-slate-300">
               {course.level}
             </span>
           )}
         </div>
 
         <div>
-          <h3 className="text-lg font-semibold text-slate-900 dark:text-white line-clamp-2">
+          <h3 className="text-lg font-semibold text-primary line-clamp-2">
             {course.title}
           </h3>
           {course.description && (
-            <p className="mt-2 text-sm text-slate-500 dark:text-slate-400 line-clamp-2">
+            <p className="mt-2 text-sm text-secondary line-clamp-2">
               {course.description}
             </p>
           )}
         </div>
 
-        <div className="flex flex-wrap items-center gap-4 mt-auto text-xs text-slate-500 dark:text-slate-400">
-          <span className="flex items-center gap-1">
+        <div className="mt-auto flex flex-wrap items-center gap-4 text-xs text-secondary">
+           <span className="flex items-center gap-1">
             <Users size={14} />
             {(course.studentsEnrolled?.length ?? course.students ?? 0).toLocaleString()} learners
           </span>
@@ -65,7 +65,7 @@ export default function CourseCard({ course }) {
         </div>
 
         {instructorName && (
-          <p className="text-xs text-slate-400">By {instructorName}</p>
+          <p className="text-xs text-subtle">By {instructorName}</p>
         )}
 
         <Link
