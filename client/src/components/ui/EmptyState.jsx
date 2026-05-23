@@ -6,8 +6,8 @@ export default function EmptyState({ icon: Icon, title, message, action }) {
           <Icon size={28} />
         </div>
       )}
-      <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100">{title}</h3>
-      {message && <p className="mt-2 text-sm text-muted">{message}</p>}
+      <h3 className="text-xl font-semibold text-primary">{title}</h3>
+      {message && <p className="mt-2 text-sm text-secondary">{message}</p>}
       {action && <div className="mt-6 flex justify-center">{action}</div>}
     </div>
   );

@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import AnimatedPage from '../components/motion/AnimatedPage';
 import Button from '../components/common/Button';
 import Input from '../components/common/Input';
+import { useTheme } from '../contexts/ThemeContext';
 
 export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -18,6 +19,7 @@ export default function LoginPage() {
   const [emailError, setEmailError] = useState('');
   const navigate = useNavigate();
   const { login, signup } = useAuth();
+  const { isDark } = useTheme();
   const [teacherCode, setTeacherCode] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -60,20 +62,20 @@ const handleSubmit = async (e) => {
   return (
     <AnimatedPage className="min-h-screen">
       <div className="relative min-h-screen">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900" />
-        <div className="absolute -left-24 top-10 h-64 w-64 rounded-full bg-sky-500/20 blur-3xl" />
-        <div className="absolute -right-24 top-32 h-72 w-72 rounded-full bg-pink-500/20 blur-3xl" />
+        <div className={`absolute inset-0 ${isDark ? 'bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900' : 'bg-gradient-to-br from-sky-50 via-white to-indigo-50'}`} />
+        <div className={`absolute -left-24 top-10 h-64 w-64 rounded-full blur-3xl ${isDark ? 'bg-sky-500/20' : 'bg-sky-300/20'}`} />
+        <div className={`absolute -right-24 top-32 h-72 w-72 rounded-full blur-3xl ${isDark ? 'bg-pink-500/20' : 'bg-pink-300/20'}`} />
 
         <div className="relative mx-auto grid min-h-screen max-w-6xl items-center gap-12 px-4 py-16 md:grid-cols-[1.05fr_0.95fr]">
-          <div className="text-white">
-            <span className="badge mb-6 inline-flex items-center gap-2 bg-white/10 text-white">
+          <div className={isDark ? 'text-white' : 'text-primary'}>
+            <span className={`badge mb-6 inline-flex items-center gap-2 ${isDark ? 'bg-white/10 text-white' : 'bg-sky-100 text-slate-700'}`}>
               <Shield size={14} /> Secure learning workspace
             </span>
             <h1 className="text-5xl font-semibold leading-tight">Welcome to Learnify</h1>
-            <p className="mt-6 text-lg text-slate-200">
+            <p className={`mt-6 text-lg ${isDark ? 'text-slate-200' : 'text-secondary'}`}>
               The modern platform for focused learning, certification, and instructor collaboration.
             </p>
-            <div className="mt-8 space-y-3 text-sm text-slate-300">
+            <div className={`mt-8 space-y-3 text-sm ${isDark ? 'text-slate-300' : 'text-secondary'}`}>
               <p>Trusted by ambitious learners in 40+ countries.</p>
               <p>Track mastery, unlock achievements, and share credentials.</p>
             </div>
@@ -87,10 +89,10 @@ const handleSubmit = async (e) => {
           >
             <div className="mb-6 flex items-center justify-between">
               <div>
-                <h2 className="text-2xl font-semibold text-slate-900 dark:text-white">
+                <h2 className="text-2xl font-semibold text-primary">
                   {isLogin ? 'Sign in' : 'Create account'}
                 </h2>
-                <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                <p className="mt-1 text-sm text-secondary">
                   {isLogin ? 'Welcome back to your workspace.' : 'Start your learning journey.'}
                 </p>
               </div>

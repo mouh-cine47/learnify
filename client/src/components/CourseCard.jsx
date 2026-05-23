@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { ArrowUpRight, BookOpen, Star, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-export default function CourseCard({ course }) {
+export default function CourseCard({ course, elevated = true }) {
   const courseId = course._id || course.id;
   const instructorName = course.instructor?.name
     || (course.instructor?.firstName
@@ -13,7 +13,7 @@ export default function CourseCard({ course }) {
     <motion.article
       whileHover={{ y: -4 }}
       transition={{ duration: 0.2 }}
-      className="overflow-hidden surface group rounded-3xl"
+      className={`overflow-hidden surface group rounded-3xl ${elevated ? 'card-ring' : ''}`}
     >
       <div className="relative overflow-hidden h-44">
         {course.image ? (
@@ -23,9 +23,9 @@ export default function CourseCard({ course }) {
             <BookOpen size={48} className="text-white/80" />
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/45 via-transparent to-transparent" />
         {course.category && (
-          <span className="badge absolute left-4 top-4 bg-sky-50/90 text-slate-700">
+          <span className="badge absolute left-4 top-4 bg-white/90 text-slate-700 shadow-sm backdrop-blur-sm dark:bg-slate-900/80 dark:text-slate-200">
             {course.category}
           </span>
         )}
@@ -41,18 +41,18 @@ export default function CourseCard({ course }) {
         </div>
 
         <div>
-          <h3 className="text-lg font-semibold text-slate-900 dark:text-white line-clamp-2">
+          <h3 className="text-lg font-semibold text-primary line-clamp-2">
             {course.title}
           </h3>
           {course.description && (
-            <p className="mt-2 text-sm text-muted line-clamp-2">
+            <p className="mt-2 text-sm text-secondary line-clamp-2">
               {course.description}
             </p>
           )}
         </div>
 
-        <div className="mt-auto flex flex-wrap items-center gap-4 text-xs text-muted">
-          <span className="flex items-center gap-1">
+        <div className="mt-auto flex flex-wrap items-center gap-4 text-xs text-secondary">
+           <span className="flex items-center gap-1">
             <Users size={14} />
             {(course.studentsEnrolled?.length ?? course.students ?? 0).toLocaleString()} learners
           </span>

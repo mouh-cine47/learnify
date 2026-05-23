@@ -30,9 +30,9 @@ export default function StatCard({ icon: Icon, label, value, hint, tone = 'indig
           <Icon size={22} className={styles.icon} />
         </div>
         <div>
-          <p className="text-sm text-muted">{label}</p>
-          <p className="text-3xl font-semibold text-slate-900 dark:text-slate-100">{value}</p>
-          {hint && <p className="mt-1 text-xs text-slate-400">{hint}</p>}
+          <p className="text-sm text-secondary">{label}</p>
+          <p className="text-3xl font-semibold text-primary">{value}</p>
+          {hint && <p className="mt-1 text-xs text-secondary">{hint}</p>}
         </div>
       </div>
     </div>

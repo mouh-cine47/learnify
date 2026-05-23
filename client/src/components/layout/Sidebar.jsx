@@ -11,7 +11,7 @@ export default function Sidebar({ open, onClose }) {
     { to: '/', label: 'Overview', icon: Sparkles },
     { to: '/courses', label: 'Courses', icon: BookOpen },
     { to: '/dashboard', label: 'Student Dashboard', icon: LayoutDashboard },
-    { to: '/certificates', label: 'Certificates', icon: Award },
+    { to: '/certificates', label: 'Certificates', icon: Award, role: 'student' },
     { to: '/teacher-dashboard', label: 'Teacher Studio', icon: GraduationCap, role: 'teacher' },
     { to: '/profile', label: 'Profile', icon: User },
   ];
@@ -27,7 +27,7 @@ export default function Sidebar({ open, onClose }) {
         className={`flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition ${
           active
             ? 'bg-slate-900 text-white shadow-lg shadow-slate-900/30 dark:bg-white dark:text-slate-900'
-            : 'text-muted hover:bg-sky-50/80 hover:text-slate-900 dark:hover:bg-slate-800/70 dark:hover:text-white'
+            : 'text-secondary hover:bg-sky-50/80 hover:text-primary dark:hover:bg-slate-800/70 dark:hover:text-white'
         }`}
       >
         <Icon size={18} />
@@ -74,7 +74,7 @@ export default function Sidebar({ open, onClose }) {
               animate={{ x: 0 }}
               exit={{ x: -280 }}
               transition={{ duration: 0.25, ease: 'easeOut' }}
-              className="relative h-full w-72 bg-sky-50 p-5 shadow-2xl dark:bg-slate-950"
+              className="relative h-full w-72 surface p-5"
             >
               <div className="mb-6 flex items-center justify-between">
                 <div>
@@ -83,7 +83,7 @@ export default function Sidebar({ open, onClose }) {
                 </div>
                 <button
                   onClick={onClose}
-                  className="rounded-2xl border border-sky-200/70 p-2 text-muted transition hover:text-slate-900 dark:border-slate-700/60 dark:hover:text-white"
+                  className="rounded-2xl border border-sky-200/70 p-2 text-secondary transition hover:text-primary dark:border-slate-700/60 dark:hover:text-white"
                 >
                   <X size={18} />
                 </button>

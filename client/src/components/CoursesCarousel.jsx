@@ -21,13 +21,10 @@ export default function CoursesCarousel({ courses }) {
       >
         {courses.map(course => (
           <div key={course._id || course.id} className="flex-shrink-0 w-full md:w-[45%] lg:w-[32%]">
-            <CourseCard course={course} />
+            <CourseCard course={course} elevated={false} />
           </div>
         ))}
       </div>
-
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-sky-50/80 to-transparent dark:from-slate-950/80" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-sky-50/80 to-transparent dark:from-slate-950/80" />
 
       <button
         onClick={() => scroll('left')}
