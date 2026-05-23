@@ -184,7 +184,7 @@ export default function QuizPage() {
         <div className="surface rounded-3xl p-8">
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-semibold text-primary">Answer review</h2>
-            <button onClick={() => setShowReview(false)} className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200">✕</button>
+            <button onClick={() => setShowReview(false)} className="text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200">✕</button>
           </div>
           <div className="mt-6 space-y-4">
             {quiz.questions.map((q, idx) => {
@@ -319,7 +319,7 @@ export default function QuizPage() {
             <button key={idx} onClick={() => setCurrentQuestion(idx)}
               className={`h-8 w-8 rounded-full text-xs font-semibold transition ${
                 idx === currentQuestion
-                  ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900'
+                  ? 'bg-white text-slate-900 dark:bg-slate-900 dark:text-white'
                   : answers[idx] !== undefined
                     ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-200'
                       : 'border border-sky-200/60 bg-sky-50/80 text-secondary dark:border-slate-700/60 dark:bg-slate-900/70 dark:text-slate-300'

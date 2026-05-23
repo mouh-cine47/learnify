@@ -216,7 +216,7 @@ export default function DashboardPage() {
                       to={`/course/${lesson.courseId}`}
                       className="flex flex-col gap-1 rounded-2xl border border-sky-200/60 bg-sky-50/80 p-4 text-sm transition hover:-translate-y-0.5 dark:border-slate-700/60 dark:bg-slate-900/70"
                     >
-                      <span className="text-xs uppercase tracking-wide text-slate-400">
+                      <span className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400">
                         {lesson.courseName}
                       </span>
                       <span className="font-semibold text-slate-900 dark:text-white">
