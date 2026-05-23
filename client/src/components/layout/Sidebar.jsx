@@ -26,7 +26,7 @@ export default function Sidebar({ open, onClose }) {
         onClick={onClick}
         className={`flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition ${
           active
-            ? 'bg-slate-900 text-white shadow-lg shadow-slate-900/30 dark:bg-white dark:text-slate-900'
+            ? 'bg-white text-slate-900 shadow-lg shadow-slate-900/10 dark:bg-slate-900 dark:text-white'
             : 'text-secondary hover:bg-sky-50/80 hover:text-primary dark:hover:bg-slate-800/70 dark:hover:text-white'
         }`}
       >
@@ -65,7 +65,7 @@ export default function Sidebar({ open, onClose }) {
             exit={{ opacity: 0 }}
           >
             <div
-              className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
+              className="absolute inset-0 bg-black/10 dark:bg-slate-900/40 backdrop-blur-sm"
               onClick={onClose}
               role="presentation"
             />

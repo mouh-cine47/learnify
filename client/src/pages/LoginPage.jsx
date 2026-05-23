@@ -99,13 +99,13 @@ const handleSubmit = async (e) => {
               <div className="flex rounded-2xl border border-sky-200/60 bg-sky-50/80 p-1 text-xs font-semibold text-slate-600 dark:border-slate-700/60 dark:bg-slate-900/70 dark:text-slate-300">
                 <button
                   onClick={() => setIsLogin(true)}
-                  className={`rounded-2xl px-3 py-1.5 transition ${isLogin ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900' : ''}`}
+                  className={`rounded-2xl px-3 py-1.5 transition ${isLogin ? 'bg-white text-slate-900 dark:bg-slate-900 dark:text-white' : ''}`}
                 >
                   Login
                 </button>
                 <button
                   onClick={() => setIsLogin(false)}
-                  className={`rounded-2xl px-3 py-1.5 transition ${!isLogin ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900' : ''}`}
+                  className={`rounded-2xl px-3 py-1.5 transition ${!isLogin ? 'bg-white text-slate-900 dark:bg-slate-900 dark:text-white' : ''}`}
                 >
                   Sign Up
                 </button>
