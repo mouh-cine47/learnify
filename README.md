@@ -43,6 +43,28 @@ A robust MERN stack application for online learning, featuring dedicated dashboa
    npm run dev
    ```
 
+## 🐳 Docker
+
+You can run the full stack with Docker Compose:
+
+```bash
+docker compose up --build
+```
+
+This starts:
+- MongoDB on `mongodb://localhost:27017`
+- The API on `http://localhost:3000`
+- The Vite client on `http://localhost:5173`
+
+The client container uses `VITE_API_PROXY_TARGET=http://server:3000`, so browser requests to `/api` are forwarded to the backend container.
+
+Useful commands:
+
+```bash
+npm run docker:up
+npm run docker:down
+```
+
 ## 🛠 API Reference
 **Base URL:** `http://localhost:3000`
 

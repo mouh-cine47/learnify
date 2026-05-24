@@ -1,0 +1,51 @@
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  server:
+    build:
+      context: ./server
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      MONGO_URI: mongodb://mongo:27017/learnify
+      JWT_SECRET: learnify-dev-secret
+      TEACHER_SECRET: learnify-teacher-secret
+      CLIENT_URL: http://localhost:5173
+    volumes:
+      - ./server:/app
+      - server-node-modules:/app/node_modules
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  client:
+    build:
+      context: ./client
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_PROXY_TARGET: http://server:3000
+    volumes:
+      - ./client:/app
+      - client-node-modules:/app/node_modules
+    depends_on:
+      - server
+
+volumes:
+  mongo-data:
+  server-node-modules:
+  client-node-modules:
