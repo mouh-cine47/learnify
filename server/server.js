@@ -21,6 +21,7 @@ const teacherRoutes = require('./routes/teacherRoutes');
 // Middleware
 const allowedOrigins = [
   process.env.CLIENT_URL,
+  'https://learnnifyyy.netlify.app',
   'http://localhost:5173',
   'http://localhost:5174',
   'http://localhost:5175',
@@ -34,6 +35,7 @@ app.use(cors({
     if (!origin) return callback(null, true);
     const isAllowed =
       allowedOrigins.includes(origin) ||
+      /^https:\/\/[a-z0-9-]+\.netlify\.app$/.test(origin) ||
       /^http:\/\/(localhost|127\.0\.0\.1):\d+$/.test(origin);
     if (isAllowed) return callback(null, true);
     return callback(new Error(`CORS blocked for origin: ${origin}`));
