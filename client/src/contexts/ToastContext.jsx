@@ -74,7 +74,7 @@ export const ToastProvider = ({ children }) => {
                 </div>
                 <button
                   onClick={() => remove(toast.id)}
-                  className="rounded-full p-1 text-slate-400 transition hover:bg-sky-100/70 hover:text-slate-700 dark:hover:bg-slate-700/60 dark:hover:text-slate-100"
+                  className="rounded-full p-1 text-slate-500 transition hover:bg-sky-100/70 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-700/60 dark:hover:text-slate-100"
                   aria-label="Dismiss notification"
                 >
                   <X size={16} />

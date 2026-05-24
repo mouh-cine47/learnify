@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import url("https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap");
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --font-sans: "Sora", "Segoe UI", sans-serif;
   --font-display: "Space Grotesk", "Sora", sans-serif;

@@ -1,9 +1,12 @@
+import { useTheme } from '../contexts/ThemeContext';
+
 export default function ProgressBar({ progress }) {
+  const { isDark } = useTheme();
   const done = progress === 100;
   return (
     <div className="w-full">
       <div className="mb-2 flex items-center justify-between text-sm">
-        <span className="font-medium text-muted">Progress</span>
+        <span className="font-medium text-black dark:text-white" style={{ color: isDark ? undefined : '#000000' }}>Progress</span>
         <span className={`font-semibold ${done ? 'text-emerald-500' : 'text-sky-500'}`}>
           {progress}%
         </span>

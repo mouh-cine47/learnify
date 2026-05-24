@@ -121,12 +121,12 @@ export default function ProfilePage() {
           {/* Profile Header */}
           <div className="h-32 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-900 dark:to-purple-900" />
 
-          <div className="px-8 pb-8">
-              <div className="-mt-12 flex flex-col items-start gap-6 md:flex-row md:items-end">
-              <div className="flex h-24 w-24 items-center justify-center rounded-3xl bg-gradient-to-br from-sky-400 via-indigo-500 to-violet-500 text-3xl font-semibold text-white shadow-lg shadow-sky-500/30">
+          <div className="px-6 pb-8 pt-8 sm:px-8">
+              <div className="flex flex-col items-start gap-4 md:flex-row md:items-start md:gap-6">
+              <div className="-mt-20 flex h-24 w-24 flex-shrink-0 items-center justify-center rounded-3xl bg-gradient-to-br from-sky-400 via-indigo-500 to-violet-500 text-3xl font-semibold text-white shadow-lg shadow-sky-500/30 ring-4 ring-sky-50 dark:ring-slate-950">
                 {profile?.firstName?.[0]?.toUpperCase() || '?'}
               </div>
-              <div>
+              <div className="pt-1 md:pt-0">
                 <h1 className="text-2xl font-semibold text-black dark:text-white" style={{ color: isDark ? undefined : '#000000' }}>{fullName || 'No name'}</h1>
                 <p className="mt-1 text-sm capitalize text-black dark:text-slate-300" style={{ color: isDark ? undefined : '#000000' }}>{profile?.role}</p>
               </div>
@@ -184,7 +184,7 @@ export default function ProfilePage() {
                Change Password
              </button>
             ) : (
-               <div className="surface-strong mt-6 space-y-4 rounded-2xl border border-sky-200/80 p-6 dark:border-slate-700/80">
+               <div className="surface-strong mt-6 max-w-xl space-y-4 rounded-2xl border border-sky-200/80 p-6 dark:border-slate-700/80">
                   <h3 className="font-bold text-black dark:text-white" style={{ color: isDark ? undefined : '#000000' }}>Change Password</h3>
                  {pwdError && <p className="text-sm text-red-500">{pwdError}</p>}
                  {pwdSuccess && <p className="text-sm text-green-500">{pwdSuccess}</p>}
@@ -196,8 +196,13 @@ export default function ProfilePage() {
                        : 'Confirm New Password'}
                    </label>
                    <div className="relative">
-                     <input type={showPwd[field] ? 'text' : 'password'} value={pwdForm[field]} onChange={e => setPwdForm(f => ({ ...f, [field]: e.target.value }))} className="input pr-10 !text-black !placeholder:text-slate-400"/>
-                     <button type="button" onClick={() => setShowPwd(s => ({ ...s, [field]: !s[field] }))} className="absolute text-gray-400 -translate-y-1/2 right-3 top-1/2 hover:text-gray-600 dark:hover:text-gray-300" >
+                     <input
+                       type={showPwd[field] ? 'text' : 'password'}
+                       value={pwdForm[field]}
+                       onChange={e => setPwdForm(f => ({ ...f, [field]: e.target.value }))}
+                       className="h-12 w-full rounded-2xl border border-sky-300/80 bg-white px-4 pr-11 text-black shadow-sm outline-none transition placeholder:text-slate-500 focus:border-sky-500 focus:ring-4 focus:ring-sky-500/15 dark:border-slate-600 dark:bg-slate-950/70 dark:text-white dark:placeholder:text-slate-400 dark:focus:border-sky-400"
+                     />
+                     <button type="button" onClick={() => setShowPwd(s => ({ ...s, [field]: !s[field] }))} className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-1 text-gray-500 transition hover:bg-sky-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-slate-800 dark:hover:text-gray-200" >
                        {showPwd[field] ? <EyeOff size={16} /> : <Eye size={16} />}
                      </button>
                    </div>
