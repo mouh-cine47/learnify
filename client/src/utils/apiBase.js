@@ -1,3 +1,3 @@
 export function getApiBaseUrl() {
-  return '/api';
+  return (import.meta.env.VITE_API_URL || '/api').replace(/\/$/, '');
 }
