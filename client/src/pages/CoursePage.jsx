@@ -18,6 +18,7 @@ import {
   Users,
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 import { useToast } from '../contexts/ToastContext';
 import AnimatedPage from '../components/motion/AnimatedPage';
 import ProgressBar from '../components/ProgressBar';
@@ -168,6 +169,7 @@ function LessonItem({ lesson, isEnrolled, userId }) {
 export default function CoursePage() {
   const { id } = useParams();
   const { user } = useAuth();
+  const { isDark } = useTheme();
   const { push } = useToast();
 
   const [course, setCourse] = useState(null);
@@ -187,21 +189,19 @@ export default function CoursePage() {
           apiFetch(`/courses/${id}/lessons`),
         ]);
 
-        // Vérifier si un quiz existe pour ce cours
+        // check for quiz
         try {
           await apiFetch(`/quizzes/course/${id}`);
           setHasQuiz(true);
         } catch {
-          setHasQuiz(false); // 404 → pas de quiz
+          setHasQuiz(false);
         }
+
         setCourse(courseData);
         setLessons(lessonsData.lessons ?? lessonsData);
 
-        // Check si l'utilisateur est déjà enrolled
         const userId = user?._id || user?.id;
-        const enrolled = courseData.studentsEnrolled?.some(
-          s => (s._id || s) === userId
-        );
+        const enrolled = courseData.studentsEnrolled?.some(s => (s._id || s) === userId);
         setIsEnrolled(enrolled);
       } catch (e) {
         setError(e.message);
@@ -218,7 +218,7 @@ export default function CoursePage() {
       setIsEnrolled(true);
       setCourse(prev => ({
         ...prev,
-        studentsEnrolled: [...(prev.studentsEnrolled ?? []), user?._id || user?.id],
+        studentsEnrolled: [...(prev?.studentsEnrolled ?? []), user?._id || user?.id],
       }));
       push('Enrollment confirmed. Your lessons are unlocked.', 'success');
     } catch (e) {
@@ -227,6 +227,16 @@ export default function CoursePage() {
       setEnrolling(false);
     }
   };
+
+  // derived values
+  const instructor = course?.instructor;
+  const totalStudents = course?.studentsEnrolled?.length ?? 0;
+  const totalLessons = lessons.length;
+  const userId = user?._id || user?.id;
+  const completedLessons = lessons.filter(l =>
+    l.studentsCompleted?.some(s => (s._id || s) === userId)
+  ).length;
+  const progress = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
 
   if (loading) return (
     <div className="flex items-center justify-center min-h-screen bg-sky-50 dark:bg-gray-900">
@@ -244,15 +254,6 @@ export default function CoursePage() {
   );
 
   if (!course) return null;
-
-  const instructor = course.instructor;
-  const totalStudents = course.studentsEnrolled?.length ?? 0;
-  const totalLessons = lessons.length;
-  const userId = user?._id || user?.id;
-  const completedLessons = lessons.filter(l =>
-    l.studentsCompleted?.some(s => (s._id || s) === userId)
-  ).length;
-  const progress = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
 
   return (
     <AnimatedPage className="min-h-screen">
@@ -301,7 +302,7 @@ export default function CoursePage() {
                     <Users size={18} />
                   </div>
                   <div>
-                    <p className="text-2xl font-semibold text-slate-900 dark:text-white">{totalStudents}</p>
+                    <p className="text-2xl font-semibold text-slate-900  text-black dark:text-white" style={{ color: isDark ? undefined : '#000000' }}>{totalStudents}</p>
                     <p className="text-xs text-slate-500">Students enrolled</p>
                   </div>
                 </div>
@@ -310,7 +311,7 @@ export default function CoursePage() {
                     <BookOpen size={18} />
                   </div>
                   <div>
-                    <p className="text-2xl font-semibold text-slate-900 dark:text-white">{totalLessons}</p>
+                    <p className="text-2xl font-semibold text-slate-900  text-black dark:text-white" style={{ color: isDark ? undefined : '#000000' }}>{totalLessons}</p>
                     <p className="text-xs text-slate-500">Lessons inside</p>
                   </div>
                 </div>
@@ -339,7 +340,7 @@ export default function CoursePage() {
               {user?.role === 'student' && (
                 <div className="mt-6 flex flex-wrap gap-3">
                   {isEnrolled ? (
-                    <div className="badge bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-200">
+                    <div className="badge bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-200 text-black-400" style={{ color: isDark ? undefined : '#000000' }}>
                       <CheckCircle size={14} /> Enrolled
                     </div>
                   ) : (
@@ -397,7 +398,7 @@ export default function CoursePage() {
             <h2 className="flex items-center gap-2 text-xl font-semibold text-slate-900 dark:text-white">
               <BookOpen size={20} className="text-sky-500" />
               Course curriculum
-              <span className="text-sm font-normal text-slate-400">({totalLessons} lessons)</span>
+              <span className="text-sm font-normal text-slate-400">(<span className="!text-black dark:!text-white" style={{ color: isDark ? undefined : '#000000' }}>{totalLessons}</span> lessons)</span>
             </h2>
             {showLessons ? <ChevronUp size={20} className="text-slate-400" /> : <ChevronDown size={20} className="text-slate-400" />}
           </div>
