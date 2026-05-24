@@ -121,7 +121,7 @@ function LessonItem({ lesson, isEnrolled, userId }) {
             {lesson.title}
           </p>
           {lesson.content && (
-            <p className="mt-0.5 truncate text-xs text-slate-400">{lesson.content}</p>
+            <p className="mt-0.5 truncate text-xs text-slate-500 dark:text-slate-400">{lesson.content}</p>
           )}
         </div>
         {lesson.fileType && (
@@ -141,7 +141,7 @@ function LessonItem({ lesson, isEnrolled, userId }) {
             className={`flex-shrink-0 rounded-2xl p-1.5 transition
               ${completed
                 ? 'text-emerald-600 dark:text-emerald-300 cursor-default'
-                : 'text-slate-400 hover:bg-emerald-500/10 hover:text-emerald-500'
+                : 'text-slate-500 hover:bg-emerald-500/10 hover:text-emerald-500 dark:text-slate-400'
               }`}
             title={completed ? 'Completed' : 'Mark as complete'}
           >
@@ -332,7 +332,7 @@ export default function CoursePage() {
                     <p className="text-sm font-semibold text-slate-900 dark:text-white">
                       {instructor.firstName} {instructor.lastName}
                     </p>
-                    <p className="text-xs text-slate-400">Instructor</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">Instructor</p>
                   </div>
                 </div>
               )}
@@ -382,7 +382,7 @@ export default function CoursePage() {
 
             {(isEnrolled || user?.role === 'teacher') && (
               <div className="mt-6 rounded-2xl border border-sky-200/60 bg-sky-50/80 p-4 dark:border-slate-700/60 dark:bg-slate-900/70">
-                <p className="text-xs uppercase tracking-wide text-slate-400">Your progress</p>
+                <p className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400">Your progress</p>
                 <p className="mt-2 text-2xl font-semibold text-slate-900 dark:text-white">{progress}%</p>
                 <p className="mt-1 text-xs text-slate-500">{completedLessons} lessons completed</p>
               </div>
@@ -400,13 +400,13 @@ export default function CoursePage() {
               Course curriculum
               <span className="text-sm font-normal text-slate-400">(<span className="!text-black dark:!text-white" style={{ color: isDark ? undefined : '#000000' }}>{totalLessons}</span> lessons)</span>
             </h2>
-            {showLessons ? <ChevronUp size={20} className="text-slate-400" /> : <ChevronDown size={20} className="text-slate-400" />}
+            {showLessons ? <ChevronUp size={20} className="text-slate-500 dark:text-slate-400" /> : <ChevronDown size={20} className="text-slate-500 dark:text-slate-400" />}
           </div>
 
           {showLessons && (
             <>
               {totalLessons === 0 ? (
-                <div className="py-10 text-center text-slate-400">
+                <div className="py-10 text-center text-slate-500 dark:text-slate-400">
                   <BookOpen size={36} className="mx-auto mb-3 opacity-30" />
                   <p>No lessons yet.</p>
                 </div>

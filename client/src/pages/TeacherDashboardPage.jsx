@@ -53,8 +53,8 @@ async function apiUpload(path, formData, method = 'POST') {
 function Modal({ title, subtitle, onClose, children }) {
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-      <div className="surface w-full max-w-lg rounded-3xl max-h-[90vh] overflow-y-auto">
-        <div className="sticky top-0 z-10 flex items-start justify-between border-b border-sky-200/60 bg-sky-50/85 p-6 pb-4 dark:border-slate-700/60 dark:bg-slate-900/80">
+      <div className="w-full max-w-lg overflow-y-auto rounded-3xl border border-sky-200/80 bg-sky-50 text-slate-950 shadow-2xl shadow-slate-900/30 max-h-[90vh] dark:border-slate-700/80 dark:bg-slate-950 dark:text-white">
+        <div className="sticky top-0 z-10 flex items-start justify-between border-b border-sky-200/70 bg-sky-50/95 p-6 pb-4 dark:border-slate-700/70 dark:bg-slate-950/95">
           <div>
             <h2 className="text-xl font-semibold text-slate-900 dark:text-white">{title}</h2>
             {subtitle && <p className="mt-0.5 text-sm text-slate-500 dark:text-slate-400">{subtitle}</p>}
@@ -63,7 +63,7 @@ function Modal({ title, subtitle, onClose, children }) {
             <X size={18} />
           </button>
         </div>
-        <div className="p-6">{children}</div>
+        <div className="bg-sky-50 p-6 dark:bg-slate-950">{children}</div>
       </div>
     </div>
   );
@@ -106,7 +106,7 @@ function FileUploadZone({ file, onChange, existingFileUrl, existingFileType }) {
   return (
     <div>
       <label className="block mb-1.5 text-sm font-semibold text-gray-700 dark:text-gray-300">
-        Attach file <span className="font-normal text-gray-400">(PDF or video, max {MAX_SIZE_MB}MB)</span>
+        Attach file <span className="font-normal text-gray-500 dark:text-gray-400">(PDF or video, max {MAX_SIZE_MB}MB)</span>
       </label>
 
       {/* Drop zone */}
@@ -135,12 +135,12 @@ function FileUploadZone({ file, onChange, existingFileUrl, existingFileType }) {
               ? <File size={28} className="flex-shrink-0 text-red-500" />
               : isVideo
                 ? <Film size={28} className="flex-shrink-0 text-purple-500" />
-                : <Upload size={28} className="flex-shrink-0 text-gray-400" />
+                : <Upload size={28} className="flex-shrink-0 text-gray-500 dark:text-gray-400" />
             }
             <div className="text-left">
               <p className="text-sm font-semibold text-gray-700 break-all dark:text-gray-300">{label}</p>
               {file && (
-                <p className="text-xs text-gray-400 mt-0.5">
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
                   {(file.size / (1024 * 1024)).toFixed(1)} MB
                 </p>
               )}
@@ -148,18 +148,18 @@ function FileUploadZone({ file, onChange, existingFileUrl, existingFileType }) {
             <button
               type="button"
               onClick={e => { e.stopPropagation(); onChange(null); }}
-              className="p-1 ml-auto text-gray-400 transition rounded hover:bg-sky-100 dark:hover:bg-gray-600 hover:text-red-500"
+              className="p-1 ml-auto text-gray-500 transition rounded hover:bg-sky-100 hover:text-red-500 dark:text-gray-400 dark:hover:bg-gray-600"
             >
               <X size={16} />
             </button>
           </div>
         ) : (
           <>
-            <Upload size={24} className="text-gray-400" />
+            <Upload size={24} className="text-gray-500 dark:text-gray-400" />
             <p className="text-sm text-gray-500 dark:text-gray-400">
               Drop file here or <span className="font-semibold text-blue-600 dark:text-blue-400">browse</span>
             </p>
-            <p className="text-xs text-gray-400">PDF, MP4, WebM, MOV — max {MAX_SIZE_MB}MB</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">PDF, MP4, WebM, MOV — max {MAX_SIZE_MB}MB</p>
           </>
         )}
       </div>
@@ -187,7 +187,7 @@ function FileViewer({ fileType, lessonId }) {
           href={`${API_BASE}/courses/lesson/${lessonId}/file?token=${getToken()}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1 text-xs text-gray-400 transition hover:text-blue-500 hover:underline"
+          className="flex items-center gap-1 text-xs text-gray-500 transition hover:text-blue-500 hover:underline dark:text-gray-400"
         >
           <Eye size={12} /> Open in new tab
         </a>
@@ -628,15 +628,15 @@ function CreateQuizModal({ course, onClose, notify }) {
             Passing score: <span className="text-purple-600">{passingScore}%</span>
           </label>
           <input type="range" min={0} max={100} value={passingScore} onChange={e => setPassingScore(+e.target.value)}
-            className="w-full" />
+            className="w-full accent-purple-600" />
         </div>
       </div>
 
       <div className="mt-6 space-y-5">
         {questions.map((q, qi) => (
-          <div key={qi} className="p-4 border border-sky-200 dark:border-gray-600 rounded-xl bg-sky-50 dark:bg-gray-700/50">
+          <div key={qi} className="rounded-2xl border border-sky-200/80 bg-white/90 p-4 shadow-sm dark:border-slate-700/80 dark:bg-slate-900/70">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-sm font-bold text-gray-700 dark:text-gray-300">Question {qi + 1}</span>
+              <span className="text-sm font-bold text-slate-800 dark:text-gray-200">Question {qi + 1}</span>
               {questions.length > 1 && (
                 <button onClick={() => removeQ(qi)} className="p-1 text-red-500 rounded hover:bg-red-50 dark:hover:bg-red-900/30">
                   <X size={14} />
@@ -645,7 +645,7 @@ function CreateQuizModal({ course, onClose, notify }) {
             </div>
             <input type="text" placeholder="Question text…" value={q.question}
               onChange={e => updateQ(qi, 'question', e.target.value)}
-              className="input mb-3 text-sm" />
+              className="mb-3 w-full rounded-2xl border border-sky-200/80 bg-sky-50/80 px-4 py-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-500 focus:border-sky-500 focus:ring-4 focus:ring-sky-500/15 dark:border-slate-700/80 dark:bg-slate-950/70 dark:text-white dark:placeholder:text-slate-400 dark:focus:border-sky-400" />
             <div className="space-y-2">
               {q.options.map((opt, oi) => (
                 <div key={oi} className="flex items-center gap-2">
@@ -654,9 +654,11 @@ function CreateQuizModal({ course, onClose, notify }) {
                     className="flex-shrink-0 accent-purple-600" title="Mark as correct answer" />
                   <input type="text" placeholder={`Option ${oi + 1}`} value={opt}
                     onChange={e => updateOption(qi, oi, e.target.value)}
-                    className={`input flex-1 text-sm ${q.correct === oi
-                      ? 'border-purple-400 bg-purple-50 dark:bg-purple-900/20 dark:border-purple-500'
-                      : ''}`} />
+                    className={`flex-1 rounded-2xl border px-4 py-3 text-sm text-slate-950 outline-none transition placeholder:text-slate-500 focus:border-sky-500 focus:ring-4 focus:ring-sky-500/15 dark:text-white dark:placeholder:text-slate-400 ${
+                      q.correct === oi
+                        ? 'border-purple-300 bg-purple-50 dark:border-purple-500 dark:bg-purple-900/20'
+                        : 'border-sky-200/80 bg-sky-50/80 dark:border-slate-700/80 dark:bg-slate-950/70'
+                    }`} />
                   {q.correct === oi && <span className="text-xs font-bold text-purple-600 dark:text-purple-400">✓</span>}
                 </div>
               ))}
@@ -744,7 +746,7 @@ function CourseCard({ course, onDelete, onEdit, onLessonAdded, notify }) {
               </div>
               {course.category && <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">{course.category}</p>}
               {course.description && <p className="mt-1 text-sm text-gray-600 dark:text-gray-400 line-clamp-2">{course.description}</p>}
-              {course.createdAt && <p className="mt-1 text-xs text-gray-400">Created {new Date(course.createdAt).toLocaleDateString()}</p>}
+              {course.createdAt && <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Created {new Date(course.createdAt).toLocaleDateString()}</p>}
             </div>
           </div>
 
@@ -789,12 +791,12 @@ function CourseCard({ course, onDelete, onEdit, onLessonAdded, notify }) {
           <div className="border-t border-slate-200/60 px-6 py-4 dark:border-slate-700/60">
             <div className="flex items-center justify-between mb-3">
               <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300">Lessons</h4>
-              <span className="text-xs text-gray-400">{lessons.length} lesson{lessons.length !== 1 ? 's' : ''}</span>
+              <span className="text-xs text-gray-500 dark:text-gray-400">{lessons.length} lesson{lessons.length !== 1 ? 's' : ''}</span>
             </div>
             {loadingLessons ? (
-              <div className="flex items-center gap-2 py-4 text-gray-400"><Loader2 size={16} className="animate-spin" /><span className="text-sm">Loading…</span></div>
+              <div className="flex items-center gap-2 py-4 text-gray-500 dark:text-gray-400"><Loader2 size={16} className="animate-spin" /><span className="text-sm">Loading…</span></div>
             ) : lessons.length === 0 ? (
-              <div className="py-6 text-center text-gray-400"><BookOpen size={32} className="mx-auto mb-2 opacity-30" /><p className="text-sm">No lessons yet.</p></div>
+              <div className="py-6 text-center text-gray-500 dark:text-gray-400"><BookOpen size={32} className="mx-auto mb-2 opacity-30" /><p className="text-sm">No lessons yet.</p></div>
             ) : (
               <div className="space-y-2">
                 {lessons.map(lesson => (
@@ -881,7 +883,7 @@ export default function TeacherDashboardPage() {
         <div className="space-y-5">
           <h2 className="text-xl font-semibold text-slate-900 dark:text-white">My courses</h2>
 
-          {loading && <div className="flex items-center justify-center gap-3 py-20 text-slate-400"><Loader2 size={26} className="animate-spin" /><span>Loading courses...</span></div>}
+          {loading && <div className="flex items-center justify-center gap-3 py-20 text-slate-500 dark:text-slate-400"><Loader2 size={26} className="animate-spin" /><span>Loading courses...</span></div>}
           {fetchError && !loading && <div className="rounded-2xl border border-rose-200/60 bg-rose-50 px-6 py-5 text-rose-700 dark:border-rose-500/30 dark:bg-rose-500/10 dark:text-rose-200">{fetchError}</div>}
           {!loading && !fetchError && courses.length === 0 && (
             <div className="surface rounded-3xl py-16 text-center text-slate-500">

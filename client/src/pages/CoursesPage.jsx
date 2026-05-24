@@ -84,7 +84,7 @@ export default function CoursesPage() {
               onClick={() => setSelectedCategory(cat)}
               className={`rounded-full px-4 py-2 text-xs font-semibold transition ${
                 selectedCategory === cat
-                  ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900'
+                  ? 'bg-white text-slate-900 dark:bg-slate-900 dark:text-white'
                   : 'border border-sky-200/60 bg-sky-50/80 text-slate-700 hover:border-sky-300 dark:border-slate-700/60 dark:bg-slate-900/70 dark:text-slate-300'
               }`}
             >
