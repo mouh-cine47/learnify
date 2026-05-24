@@ -8,8 +8,9 @@ import AnimatedPage from '../components/motion/AnimatedPage';
 import SectionHeader from '../components/ui/SectionHeader';
 import Skeleton from '../components/ui/Skeleton';
 import EmptyState from '../components/ui/EmptyState';
+import { getApiBaseUrl } from '../utils/apiBase';
 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+const API_BASE = getApiBaseUrl();
 function getToken() { return localStorage.getItem('token'); }
 
 const CATEGORY_ICONS = {

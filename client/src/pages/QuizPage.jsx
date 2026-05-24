@@ -4,8 +4,9 @@ import { AlertCircle, CheckCircle2, Circle, Clock, Home, Loader2, RotateCcw, Tro
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
 import AnimatedPage from '../components/motion/AnimatedPage';
+import { getApiBaseUrl } from '../utils/apiBase';
 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+const API_BASE = getApiBaseUrl();
 function getToken() { return localStorage.getItem('token'); }
 
 async function apiFetch(path, options = {}) {
