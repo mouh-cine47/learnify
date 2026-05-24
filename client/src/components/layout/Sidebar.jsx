@@ -2,9 +2,11 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Award, BookOpen, GraduationCap, LayoutDashboard, Sparkles, User, X } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { useTheme } from '../../contexts/ThemeContext';
 
 export default function Sidebar({ open, onClose }) {
   const { user } = useAuth();
+  const { isDark } = useTheme();
   const location = useLocation();
 
   const items = [
@@ -49,9 +51,9 @@ export default function Sidebar({ open, onClose }) {
               <NavLink key={item.to} {...item} />
             ))}
           </nav>
-          <div className="mt-6 rounded-2xl border border-sky-200/70 bg-sky-100/70 p-4 text-xs text-muted shadow-sm dark:border-slate-700/60 dark:bg-slate-900/70">
-            <p className="font-semibold text-ink">Upgrade learning</p>
-            <p className="mt-1">Unlock premium analytics, cohorts, and live workshops.</p>
+          <div className={`mt-6 rounded-2xl border p-4 text-xs text-muted shadow-sm ${isDark ? 'border-slate-700/60 bg-slate-900/70' : 'border-sky-200/70 bg-white/70'}`}>
+            <p className="font-semibold text-black dark:text-white" style={{ color: isDark ? undefined : '#000000' }}>Upgrade learning</p>
+            <p className="mt-1 text-black dark:text-white" style={{ color: isDark ? undefined : '#000000' }}>Unlock premium analytics, cohorts, and live workshops.</p>
           </div>
         </div>
       </aside>

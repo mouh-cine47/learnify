@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { AlertCircle, CheckCircle2, Circle, Clock, Home, Loader2, RotateCcw, Trophy } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 import AnimatedPage from '../components/motion/AnimatedPage';
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
@@ -27,6 +28,7 @@ async function apiFetch(path, options = {}) {
 export default function QuizPage() {
   const { id: courseId } = useParams();
   const { user } = useAuth();
+  const { isDark } = useTheme();
   const navigate = useNavigate();
 
   const [quiz, setQuiz] = useState(null);
@@ -276,10 +278,10 @@ export default function QuizPage() {
                         ? 'border-emerald-500 bg-emerald-500 text-white shadow-lg shadow-emerald-500/25'
                         : isSelected
                           ? 'border-rose-500 bg-rose-500 text-white shadow-lg shadow-rose-500/25'
-                          : 'border-sky-200/60 bg-sky-50/80 text-primary hover:border-sky-300 hover:bg-sky-50 dark:border-slate-700/60 dark:bg-slate-900/70 dark:text-white dark:hover:bg-slate-800'
+                          : `border-sky-200/60 text-primary hover:border-sky-300 hover:bg-sky-50 dark:border-slate-700/60 dark:text-white dark:hover:bg-slate-800 ${isDark ? 'bg-slate-900/70' : 'bg-white/70'}`
                       : isSelected
                         ? 'border-sky-500 bg-sky-500 text-white shadow-lg shadow-sky-500/25'
-                        : 'border-sky-200/60 bg-sky-50/80 text-primary hover:border-sky-300 hover:bg-sky-50 dark:border-slate-700/60 dark:bg-slate-900/70 dark:text-white dark:hover:bg-slate-800'
+                        : `border-sky-200/60 text-primary hover:border-sky-300 hover:bg-sky-50 dark:border-slate-700/60 dark:text-white dark:hover:bg-slate-800 ${isDark ? 'bg-slate-900/70' : 'bg-white/70'}`
                   } cursor-pointer`}
                 >
                   <span className="flex items-center justify-between">

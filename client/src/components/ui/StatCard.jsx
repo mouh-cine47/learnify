@@ -1,3 +1,5 @@
+import { useTheme } from '../../contexts/ThemeContext';
+
 const TONES = {
   indigo: {
     icon: 'text-indigo-500',
@@ -22,17 +24,18 @@ const TONES = {
 };
 
 export default function StatCard({ icon: Icon, label, value, hint, tone = 'indigo' }) {
+  const { isDark } = useTheme();
   const styles = TONES[tone] || TONES.indigo;
   return (
-    <div className="surface rounded-2xl p-5">
+    <div className={`rounded-2xl p-5 shadow-sm ${isDark ? 'border border-slate-700/60 bg-slate-900/70' : 'border border-sky-200/70 bg-white/70'}`}>
       <div className="flex items-center gap-4">
         <div className={`rounded-2xl p-3 ${styles.ring}`}>
           <Icon size={22} className={styles.icon} />
         </div>
         <div>
-          <p className="text-sm text-secondary">{label}</p>
+          <p className="text-sm text-black dark:text-white" style={{ color: isDark ? undefined : '#000000' }}>{label}</p>
           <p className="text-3xl font-semibold text-primary">{value}</p>
-          {hint && <p className="mt-1 text-xs text-secondary">{hint}</p>}
+          {hint && <p className="mt-1 text-xs text-black dark:text-white" style={{ color: isDark ? undefined : '#000000' }}>{hint}</p>}
         </div>
       </div>
     </div>
