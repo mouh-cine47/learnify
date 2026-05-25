@@ -1,102 +1,94 @@
-# Learnify - Full Stack E-Learning Platform
+# Learnify — Plateforme E-Learning UM5
 
-A robust MERN stack application for online learning, featuring dedicated dashboards for students and teachers, progress tracking, and interactive quizzes.
+Learnify est une plateforme de e-learning développée pour l'Université Mohammed V de Rabat. Elle centralise les cours, les ressources pédagogiques, les quiz interactifs et les attestations de réussite. Elle s'adresse aux **enseignants** qui souhaitent créer et gérer leur contenu, ainsi qu'aux **étudiants** qui veulent suivre leur progression et valider leurs apprentissages.
 
-## 🚀 Getting Started
+---
 
-### Prerequisites
-- Node.js (v16+)
-- MongoDB Atlas account or local instance
-- Git
+## 👥 Membres de l'équipe
 
-### Installation
+| Prénom & Nom | Rôle Scrum | Contribution principale |
+|---|---|---|
+| Mouhcine ALOUANI | Scrum Master & Product Owner | Définition du backlog, validation des critères d'acceptation |
+| Adam FARIZ | Développeur | Backend (API REST, auth JWT, routes, modèles MongoDB) |
+| Imane CHAMSSI | Développeur | Frontend (React, pages, composants, intégration API) |
 
-1. **Clone the repository:**
+---
+
+## 🛠 Technologies utilisées
+
+| Couche | Technologie | Version |
+|---|---|---|
+| Frontend | React | 19.x |
+| Frontend | Vite | 8.x |
+| Frontend | Tailwind CSS | 4.x |
+| Frontend | React Router DOM | 7.x |
+| Frontend | Framer Motion | 11.x |
+| Backend | Node.js | 18+ |
+| Backend | Express.js | 4.x |
+| Backend | JSON Web Token (JWT) | 9.x |
+| Backend | Multer (upload fichiers) | 2.x |
+| Base de données | MongoDB (via Mongoose) | 8.x |
+| Conteneurisation | Docker & Docker Compose | — |
+
+---
+
+## ⚙️ Prérequis d'installation
+
+- **Docker** v24+ — [docs.docker.com](https://docs.docker.com/get-docker/)
+- **Docker Compose** v2+ (inclus avec Docker Desktop)
+- **Git** — [git-scm.com](https://git-scm.com)
+
+---
+
+## 🚀 Instructions de lancement
+
+1. **Cloner le dépôt :**
    ```bash
    git clone https://github.com/farizadam/learnify.git
    cd learnify
    ```
 
-2. **Backend Setup:**
+2. **Lancer l'application :**
    ```bash
-   cd server
-   npm install
+   docker compose up --build
    ```
-   
-   Create a `.env` file:
-   ```env
-   PORT=3000
-   MONGO_URI=your_mongodb_uri
-   JWT_SECRET=your_secret_key
-   TEACHER_SECRET = your_teacher_secret_here
-   ```
-   
-   Start the server:
+
+   Cela démarre automatiquement :
+   - MongoDB sur `mongodb://localhost:27017`
+   - L'API backend sur `http://localhost:3000`
+   - Le frontend sur `http://localhost:5173`
+
+3. **Arrêter l'application :**
    ```bash
-   npm start
+   docker compose down
    ```
 
-3. **Frontend Setup:**
-   ```bash
-   cd ../client
-   npm install
-   npm run dev
-   ```
+---
 
-## 🐳 Docker
+## 🌐 URL de déploiement
 
-You can run the full stack with Docker Compose:
+**👉 [https://learnnifyyy.netlify.app/](https://learnnifyyy.netlify.app/)**
 
-```bash
-docker compose up --build
-```
+> Frontend hébergé sur **Netlify** — Backend hébergé sur **Render**.
 
-This starts:
-- MongoDB on `mongodb://localhost:27017`
-- The API on `http://localhost:3000`
-- The Vite client on `http://localhost:5173`
+---
 
-The client container uses `VITE_API_PROXY_TARGET=http://server:3000`, so browser requests to `/api` are forwarded to the backend container.
+## 🔑 Identifiants de test
 
-Useful commands:
+| Rôle | Email | Mot de passe |
+|---|---|---|
+| Étudiant | sara.benmossa@gmail.com | 123456 |
+| Enseignant | jalal.fathi@gmail.com | fathi1234 |
 
-```bash
-npm run docker:up
-npm run docker:down
-```
+> ⚠️ Ces données sont fictives et utilisées uniquement à des fins de démonstration.
 
-## 🛠 API Reference
-**Base URL:** `http://localhost:3000`
+---
 
-**Headers:**
-- `Content-Type: application/json`
-- `Authorization: Bearer <JWT>` (for protected routes)
+## 📁 Livrables antérieurs
 
-### Authentication (`/api/auth`)
-| Endpoint | Method | Expects | Returns |
-| --- | --- | --- | --- |
-| `/register` | POST | `{firstName, lastName, email, password, role}` | Success Message |
-| `/login` | POST | `{email, password}` | `{token}` |
-| `/refresh-token` | POST | `{token}` | `{token}` (new) |
-
-### User & Teacher (`/api/users` & `/api/teacher`)
-| Endpoint | Method | Expects | Returns |
-| --- | --- | --- | --- |
-| `/user` | GET | Bearer Token | User Profile object |
-| `/users/profile` | PUT | `{bio, avatar, socials}` | Updated User object |
-| `/teacher/stats` | GET | Bearer Token (Teacher) | Metrics (Students, Ratings) |
-
-### Courses & Lessons (`/api/courses`)
-| Endpoint | Method | Expects | Returns |
-| --- | --- | --- | --- |
-| `/courses` | GET | Optional `?title=...` | Array of Courses |
-| `/courses/:id` | GET | Course ID | Course details + Lessons |
-| `/:courseId/enroll` | POST | Bearer Token | Success + Enrollment status |
-| `/courses/addLesson` | POST | `{title, content, courseId}` | New Lesson object |
-| `/lessons/:id/complete`| PATCH | Bearer Token | Updated progress data |
-
-### Quizzes (`/api/quizzes`)
-| Endpoint | Method | Expects | Returns |
-| --- | --- | --- | --- |
-| `/course/:courseId` | GET | Course ID | List of quiz questions |
-| `/:id/submit` | POST | `{answers}` | `{score, status}` |
+| Livrable | Description | Lien |
+|---|---|---|
+| Fiche Projet | Contexte, équipe, périmètre | [docs/learnify.pdf](./docs/learnify.pdf) |
+| Livrable 2 | Estimation COCOMO, WBS, Gantt | [docs/6_learnify_S2.pdf](./docs/6_learnify_S2.pdf) |
+| Livrable 3 | Backlog Scrum, Sprints, Cérémonies | [docs/Livrable_3_6.pdf](./docs/Livrable_3_6.pdf) |
+| Livrable Final | Dépôt Git, déploiement, rétrospective | [docs/6_learnify_Final.pdf](./docs/6_learnify_Final.pdf) |
