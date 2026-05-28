@@ -8,9 +8,9 @@ Learnify est une plateforme de e-learning développée pour l'Université Mohamm
 
 | Prénom & Nom | Rôle Scrum | Contribution principale |
 |---|---|---|
-| Mouhcine ALOUANI | Scrum Master & Product Owner | Définition du backlog, validation des critères d'acceptation |
-| Adam FARIZ | Développeur | Backend (API REST, auth JWT, routes, modèles MongoDB) |
-| Imane CHAMSSI | Développeur | Frontend (React, pages, composants, intégration API) |
+| ALOUANI Mouhcine | Product Owner | Frontend (QuizPage, Dashboard, CoursePage, Navbar, Sidebar, App.jsx, CSS, apiBase) |
+| FARIZ Adam | Développeur | Backend (server, routes, controllers, models, middleware, DB config), Docker, vite config |
+| CHAMSSI Imane | Développeur | Intégration frontend-backend, ProfilePage, CourseCard, corrections controllers |
 
 ---
 
@@ -69,7 +69,7 @@ Learnify est une plateforme de e-learning développée pour l'Université Mohamm
 
 **👉 [https://learnnifyyy.netlify.app/](https://learnnifyyy.netlify.app/)**
 
-> Frontend hébergé sur **Netlify** — Backend hébergé sur **Render**.
+> Frontend hébergé sur **Netlify** — Backend hébergé sur **Railway**.
 
 ---
 
