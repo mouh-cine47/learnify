@@ -91,4 +91,4 @@ Learnify est une plateforme de e-learning développée pour l'Université Mohamm
 | Fiche Projet | Contexte, équipe, périmètre | [docs/learnify.pdf](./docs/learnify.pdf) |
 | Livrable 2 | Estimation COCOMO, WBS, Gantt | [docs/6_learnify_S2.pdf](./docs/6_learnify_S2.pdf) |
 | Livrable 3 | Backlog Scrum, Sprints, Cérémonies | [docs/Livrable_3_6.pdf](./docs/Livrable_3_6.pdf) |
-| Livrable Final | Dépôt Git, déploiement, rétrospective | [docs/6_learnify_Final.pdf](./docs/6_learnify_Final.pdf) |
+| Livrable Final | Dépôt Git, déploiement, rétrospective | [docs/6_learnify_Final.pdf](./docs/6_learnify_FINAL.pdf) |
